@@ -59,7 +59,12 @@ namespace Attendance_Counter
             this.btnImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.txtHost = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tvSG = new System.Windows.Forms.TreeView();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtSearchGroups = new System.Windows.Forms.TextBox();
+            this.btnSearchGroups = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.tabAttendance = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvReport = new System.Windows.Forms.DataGridView();
@@ -75,6 +80,8 @@ namespace Attendance_Counter
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanel9.SuspendLayout();
             this.tabAttendance.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).BeginInit();
@@ -112,7 +119,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.35623F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.64377F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tvSG, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel8, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -159,6 +166,7 @@ namespace Attendance_Counter
             this.txtUN.PlaceholderText = "Jane Doe, Jane_Doe,J Doe";
             this.txtUN.Size = new System.Drawing.Size(402, 23);
             this.txtUN.TabIndex = 7;
+            this.txtUN.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtUN_MouseDoubleClick);
             // 
             // txtEM
             // 
@@ -170,6 +178,7 @@ namespace Attendance_Counter
             this.txtEM.PlaceholderText = "JaneDoe@email.com,Jane.Doe.32@email.com";
             this.txtEM.Size = new System.Drawing.Size(402, 23);
             this.txtEM.TabIndex = 6;
+            this.txtEM.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtEM_MouseDoubleClick);
             // 
             // txtMN
             // 
@@ -181,6 +190,8 @@ namespace Attendance_Counter
             this.txtMN.PlaceholderText = "Jane Doe";
             this.txtMN.Size = new System.Drawing.Size(402, 23);
             this.txtMN.TabIndex = 5;
+            this.txtMN.TextChanged += new System.EventHandler(this.txtMN_TextChanged);
+            this.txtMN.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtMN_MouseDoubleClick);
             // 
             // label1
             // 
@@ -494,15 +505,84 @@ namespace Attendance_Counter
             this.txtHost.PlaceholderText = "Host Name (John Doe)";
             this.txtHost.Size = new System.Drawing.Size(124, 23);
             this.txtHost.TabIndex = 2;
+            this.txtHost.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtHost_MouseDoubleClick);
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 1;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Controls.Add(this.tvSG, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(556, 3);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 2;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(227, 410);
+            this.tableLayoutPanel8.TabIndex = 2;
             // 
             // tvSG
             // 
             this.tvSG.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvSG.Location = new System.Drawing.Point(556, 3);
+            this.tvSG.Location = new System.Drawing.Point(3, 63);
             this.tvSG.Name = "tvSG";
-            this.tvSG.Size = new System.Drawing.Size(227, 410);
+            this.tvSG.Size = new System.Drawing.Size(221, 344);
             this.tvSG.TabIndex = 2;
             this.tvSG.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSG_AfterSelect);
+            // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.ColumnCount = 2;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel9.Controls.Add(this.txtSearchGroups, 0, 1);
+            this.tableLayoutPanel9.Controls.Add(this.btnSearchGroups, 1, 1);
+            this.tableLayoutPanel9.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 2;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.74074F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.25926F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(221, 54);
+            this.tableLayoutPanel9.TabIndex = 3;
+            // 
+            // txtSearchGroups
+            // 
+            this.txtSearchGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchGroups.Location = new System.Drawing.Point(3, 25);
+            this.txtSearchGroups.Name = "txtSearchGroups";
+            this.txtSearchGroups.Size = new System.Drawing.Size(104, 23);
+            this.txtSearchGroups.TabIndex = 0;
+            // 
+            // btnSearchGroups
+            // 
+            this.btnSearchGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearchGroups.Location = new System.Drawing.Point(113, 25);
+            this.btnSearchGroups.Name = "btnSearchGroups";
+            this.btnSearchGroups.Size = new System.Drawing.Size(105, 26);
+            this.btnSearchGroups.TabIndex = 1;
+            this.btnSearchGroups.Text = "Search";
+            this.btnSearchGroups.UseVisualStyleBackColor = true;
+            this.btnSearchGroups.Click += new System.EventHandler(this.btnSearchGroups_Click);
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(104, 22);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Search Groups:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // tabAttendance
             // 
@@ -541,6 +621,7 @@ namespace Attendance_Counter
             this.dgvReport.RowTemplate.Height = 25;
             this.dgvReport.Size = new System.Drawing.Size(780, 374);
             this.dgvReport.TabIndex = 0;
+            this.dgvReport.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReport_CellClick);
             // 
             // tableLayoutPanel7
             // 
@@ -622,6 +703,9 @@ namespace Attendance_Counter
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.tableLayoutPanel9.PerformLayout();
             this.tabAttendance.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).EndInit();
@@ -672,6 +756,11 @@ namespace Attendance_Counter
         private System.Windows.Forms.DataGridView dgvReport;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Button btnSaveCSV;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+        private System.Windows.Forms.TextBox txtSearchGroups;
+        private System.Windows.Forms.Button btnSearchGroups;
+        private System.Windows.Forms.Label label6;
     }
 }
 

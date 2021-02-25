@@ -30,7 +30,9 @@ namespace Attendance_Counter
         List<report> reports = new List<report>();
         List<string> nonpollers = new List<string>();
         //string reportfn =  DateTime.Today.ToString("MM-dd-yyyy") + "_Report.csv";
-        
+        string guestName = "";
+        string guestEmail = "";
+
 
 
 
@@ -513,6 +515,18 @@ namespace Attendance_Counter
                     }
                 }
 
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnLoadParticipantsList_Click\n" + ex.Message);
+            }
+}
+
+        private void ParseServiceGroups()
+        {
+            try
+            {
                 //go thru each service group and find any matches to username and emails
                 foreach (TreeNode gNode in tvSG.Nodes) //group name
                 {
@@ -522,7 +536,7 @@ namespace Attendance_Counter
                         //add member to absentee hashset list and remove if found later
                         //a hashset is used because it only adds if it's unique
                         Absentee a = new Absentee(gNode.Text, mNode.Text);
-                        
+
 
                         foreach (TreeNode ueNode in mNode.Nodes)//username and email
                         {
@@ -530,7 +544,7 @@ namespace Attendance_Counter
                             HashSet<Guest> gsts = new HashSet<Guest>(guests);
                             foreach (Guest g in gsts)
                             {
-                                if (ueNode.Text.IndexOf(g.Name) > -1)
+                                if (ueNode.Text.ToUpper().IndexOf(g.Name.ToUpper()) > -1)
                                 {
                                     guests.Remove(g);
                                 }
@@ -539,18 +553,18 @@ namespace Attendance_Counter
                             if (ueNode.Text.IndexOf("Usernames:") > -1)
                             {
                                 a.Username = ueNode.Text;
-                                
+
                                 foreach (string un in lstbxName.Items)
                                 {
                                     if (string.IsNullOrWhiteSpace(un))
                                     {
                                         continue;
                                     }
-                                    if (ueNode.Text.IndexOf(un) > -1)
+                                    if (ueNode.Text.ToUpper().IndexOf(un.ToUpper()) > -1)
                                     {
                                         //remove from absentee list because it was found
                                         a.MemberName = "";
-                                        
+
                                         break;
                                     }
                                 }
@@ -558,26 +572,26 @@ namespace Attendance_Counter
                             if (ueNode.Text.IndexOf("Emails:") > -1)
                             {
                                 a.Email = ueNode.Text;
-                                
+
                                 foreach (string em in lstbxEmail.Items)
                                 {
                                     if (string.IsNullOrWhiteSpace(em))
                                     {
                                         continue;
                                     }
-                                    if (ueNode.Text.IndexOf(em) > -1)
+                                    if (ueNode.Text.ToUpper().IndexOf(em.ToUpper()) > -1)
                                     {
                                         //remove from absentee list because it was found
                                         a.MemberName = "";
                                         break;
                                     }
                                 }
-                            }                            
+                            }
                         }
                         //add absentee if it isn't blank
                         if (!string.IsNullOrEmpty(a.MemberName))
                         {
-                            if (a.Username != txtHost.Text.Trim())
+                            if (a.Username.ToUpper() != txtHost.Text.ToUpper().Trim())
                             {
                                 a.MemberName = a.MemberName.Replace("Member Name:", "");
                                 a.Username = a.Username.Replace("Usernames:", "");
@@ -585,16 +599,15 @@ namespace Attendance_Counter
                                 absentees.Add(a);
                             }
                         }
-                        
+
                     }
                 }//end of foreach loop
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("btnLoadParticipantsList_Click\n" + ex.Message);
+                MessageBox.Show("ParseServiceGroups\n" + ex.Message);
             }
-}
+        }
 
         private void btnLoadPoll_Click(object sender, EventArgs e)
         {
@@ -604,49 +617,62 @@ namespace Attendance_Counter
                 dlgOF.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
                 if (dlgOF.ShowDialog() == DialogResult.OK)
                 {
-                    txtPollDate.Text = "Gathering Poll Data";
-                    Application.DoEvents();
-                    string dt = "";
+                    txtPollDate.Text = "Poll Loaded";
                     poll = File.ReadAllText(dlgOF.FileName);
-                    pollTakers.Clear();
-                    
-                    //read line by line
-                    string[] spltPoll = poll.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                    foreach (string line in spltPoll)
-                    {
-                        //separate by comma
-                        string[] csv = line.Split(',');
-                        
-                        PollTaker p = new PollTaker();
-                        
-                        switch (csv.Length)
-                        {
-                            case 4:
-                                if (csv[0].IndexOf(Properties.Settings.Default.PollDateFinder) > -1)
-                                {
-                                    dt = csv[2];
-                                }
-                                break;
-                            case int n when n >= 6:
-                                p.Username = csv[1];
-                                p.Email = csv[2];
-                                p.PollResult = csv[6];
-                                
-                                //add p to the polltakers hashset
-                                pollTakers.Add(p);
 
-                                break;
-
-                        }//end switch
-                    }
-
-                    //add date
-                    txtPollDate.Text = DateTime.Parse(dt).ToString("MM/dd/yyyy");
                 }
+                  
             }
             catch (Exception ex)
             {
                 MessageBox.Show("btnLoadPoll_Click\n" + ex.Message);
+            }
+        }
+
+        private void LoadPoll()
+        {
+            try
+            {
+                pollTakers.Clear();
+
+                //read line by line
+                string dt = "";
+                string[] spltPoll = poll.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                foreach (string line in spltPoll)
+                {
+                    //separate by comma
+                    string[] csv = line.Split(',');
+
+                    PollTaker p = new PollTaker();
+
+                    switch (csv.Length)
+                    {
+                        case 4:
+                            if (csv[0].IndexOf(Properties.Settings.Default.PollDateFinder) > -1)
+                            {
+                                dt = csv[2];
+                            }
+                            break;
+                        case int n when n >= 6:
+                            p.Username = csv[1];
+                            p.Email = csv[2];
+                            p.PollResult = csv[6];
+
+                            //add p to the polltakers hashset
+                            pollTakers.Add(p);
+
+                            break;
+
+                    }//end switch
+                }
+
+                //add date
+                txtPollDate.Text = DateTime.Parse(dt).ToString("MM/dd/yyyy");
+            
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("LoadPoll\n" + ex.Message);
             }
         }
 
@@ -754,6 +780,9 @@ namespace Attendance_Counter
         {
             try
             {
+                ParseServiceGroups();
+                LoadPoll();
+
                 //first check the dates and if they don't match, give a warning                
                 if (txtPartDate.Text != txtPollDate.Text)
                 {
@@ -764,6 +793,8 @@ namespace Attendance_Counter
                     }
                 }
 
+                
+                dgvReport.DataSource = "";
  
                 //compare poll takers to participants to get the non poll takers
                 for (int i = 0; i < lstbxName.Items.Count; i++)
@@ -882,9 +913,11 @@ namespace Attendance_Counter
         {
             try
             {
+                
                 int i = 0;
                 foreach (string np in nonpollers)
                 {
+                    if (np == Properties.Settings.Default.CongregationName) { continue; }
                     reports[i].Failed_To_Take_Poll = np;
                     i++;
                 }
@@ -937,7 +970,209 @@ namespace Attendance_Counter
             }
         }
 
+        private void txtHost_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(tvSG.SelectedNode.Text))
+                {
+                    foreach (TreeNode tn in tvSG.SelectedNode.Nodes)
+                    {
+                        if (tn.Text.IndexOf("Usernames:") > -1)
+                        {
+                            txtHost.Text = tn.Text.Replace("Usernames:", "");
+                        }
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtHost_MouseDoubleClick\n" + ex.Message);
+            }
+        }
+
         
 
+        private void txtMN_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMN_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtMN.Text)){
+                    txtMN.Text = guestName;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtMN_MouseDoubleClick\n" + ex.Message);
+            }
+        }
+
+        private void txtUN_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtUN.Text)) {
+                    txtUN.Text = guestName;
+                }
+                else
+                {
+                    txtUN.Text += "," + guestName;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtUN_MouseDoubleClick\n" + ex.Message);
+            }
+        }
+
+        private void txtEM_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtEM.Text)) {
+                    txtEM.Text = guestEmail;
+                }
+                else
+                {
+                    txtEM.Text += "," + guestEmail;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtEM_MouseDoubleClick\n" + ex.Message);
+            }
+        }
+
+        private void dgvReport_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (dgvReport.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    guestName = "";
+                    guestEmail = "";
+                    if (e.ColumnIndex == 10)
+                    {
+                        //guest name is selected
+                        guestName = dgvReport.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                        if (dgvReport.Rows[e.RowIndex].Cells[11].Value != null)
+                        {
+                            guestEmail = dgvReport.Rows[e.RowIndex].Cells[11].Value.ToString();
+                        }
+                    }
+                    else if (e.ColumnIndex == 11)
+                    {
+                        //Gest email is selected
+                        guestEmail = dgvReport.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                        if (dgvReport.Rows[e.RowIndex].Cells[10].Value != null)
+                        {
+                            guestName = dgvReport.Rows[e.RowIndex].Cells[10].Value.ToString();
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("dgvReport_CellClick\n" + ex.Message);
+            }
+        }
+
+        private TreeNode FindFirstNode(string search, TreeView treeView)
+        {
+            try
+            {
+                TreeNode Result = new TreeNode();
+                foreach (TreeNode t in treeView.Nodes)
+                {
+                    if (t.Text.IndexOf(search) > -1)
+                    {
+                        Result = t;
+                        break;
+                    }
+                }
+                if (Result != null) //couldn't find string in parent, now try children
+                {
+                    foreach (TreeNode t in treeView.Nodes)
+                    {
+                        Result = FindChildNode(search, t);
+                        if (Result != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+                return Result;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("FindFirstNode\n" + ex.Message);
+                return null;
+            }
+        }
+
+        private TreeNode FindChildNode(string search, TreeNode treeNode)
+        {
+            try
+            {
+                TreeNode Result = new TreeNode();
+                foreach (TreeNode t in treeNode.Nodes)
+                {
+                    if (t.Text.IndexOf(search) > -1)
+                    {
+                        Result = t;
+                        break;
+                    }
+                }
+                if (Result != null) //couldn't find string in parent, now try children
+                {
+                    foreach (TreeNode t in treeNode.Nodes)
+                    {
+                        Result = FindChildNode(search, t);
+                        if (Result != null)
+                        {
+                            break;
+                        }
+
+                    }
+                }
+                return Result;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("FindChildNode\n" + ex.Message);
+                return null;
+            }
+        }
+
+        private void btnSearchGroups_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(txtSearchGroups.Text))
+                {
+                    TreeNode fndnode = FindFirstNode(txtSearchGroups.Text, tvSG);
+                    if (fndnode != null)
+                    {
+                        tvSG.SelectedNode = fndnode;
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnSearchGroups_Click\n" + ex.Message);
+            }
+        }
     }
 }

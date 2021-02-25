@@ -33,6 +33,7 @@ namespace Attendance_Counter
         
 
 
+
         //stucts
         public struct PollTaker
         {
@@ -59,15 +60,11 @@ namespace Attendance_Counter
         }
         HashSet<Absentee> absentees = new HashSet<Absentee>();
 
-        public struct Guest
+       public struct Guest
         {
             public string Name;
             public string Email;
             
-            public Guest(string Name) : this()
-            {
-                this.Name = Name;
-            }
         }
         HashSet<Guest> guests = new HashSet<Guest>();
 
@@ -459,7 +456,8 @@ namespace Attendance_Counter
                     {
                         //divide the line by comma seperated values
                         string[] csv = line.Split(',');
-                        Guest guest = new Guest();
+                        Guest gst = new Guest();
+
                         if (start)
                         {
                             if (csv.Length < 2)
@@ -469,7 +467,7 @@ namespace Attendance_Counter
                             if (!string.IsNullOrWhiteSpace(csv[0]))
                             {
                                 lstbxName.Items.Add(csv[0]);
-                                guest.Name = csv[0];
+                                gst.Name = csv[0];
                             }
                             else
                             {
@@ -478,14 +476,15 @@ namespace Attendance_Counter
                             if (!string.IsNullOrWhiteSpace(csv[1]))
                             {
                                 lstbxEmail.Items.Add(csv[1]);
-                                guest.Email = csv[1];
+                                gst.Email = csv[1];
                             }
                             else
                             {
                                 lstbxEmail.Items.Add("");
                             }
                             //add the guest to the guests list
-                            guests.Add(guest);
+                            guests.Add(gst);
+
                         }
                         else
                         {
@@ -506,8 +505,7 @@ namespace Attendance_Counter
                                     if (csv[0].IndexOf(Properties.Settings.Default.PartStart) > -1)
                                     {
                                         start = true;
-                                        lstbxName.Items.Clear();
-                                        lstbxEmail.Items.Clear();
+                                        
                                     }
                                 }
                             }
@@ -524,15 +522,24 @@ namespace Attendance_Counter
                         //add member to absentee hashset list and remove if found later
                         //a hashset is used because it only adds if it's unique
                         Absentee a = new Absentee(gNode.Text, mNode.Text);
-                        Guest guest = new Guest();
+                        
 
                         foreach (TreeNode ueNode in mNode.Nodes)//username and email
-                        {                            
+                        {
+                            //parse through all guests and eliminate any found
+                            HashSet<Guest> gsts = new HashSet<Guest>(guests);
+                            foreach (Guest g in gsts)
+                            {
+                                if (ueNode.Text.IndexOf(g.Name) > -1)
+                                {
+                                    guests.Remove(g);
+                                }
+                            }
                             //Usernames and Emails are seperated by commas
                             if (ueNode.Text.IndexOf("Usernames:") > -1)
                             {
                                 a.Username = ueNode.Text;
-                                guest.Name = ueNode.Text;
+                                
                                 foreach (string un in lstbxName.Items)
                                 {
                                     if (string.IsNullOrWhiteSpace(un))
@@ -551,7 +558,7 @@ namespace Attendance_Counter
                             if (ueNode.Text.IndexOf("Emails:") > -1)
                             {
                                 a.Email = ueNode.Text;
-                                guest.Email = ueNode.Text;
+                                
                                 foreach (string em in lstbxEmail.Items)
                                 {
                                     if (string.IsNullOrWhiteSpace(em))
@@ -570,16 +577,15 @@ namespace Attendance_Counter
                         //add absentee if it isn't blank
                         if (!string.IsNullOrEmpty(a.MemberName))
                         {
-                            a.MemberName = a.MemberName.Replace("Member Name:", "");
-                            a.Username = a.Username.Replace("Usernames:", "");
-                            a.Email = a.Email.Replace("Emails:", "");
-                            absentees.Add(a);
+                            if (a.Username != txtHost.Text.Trim())
+                            {
+                                a.MemberName = a.MemberName.Replace("Member Name:", "");
+                                a.Username = a.Username.Replace("Usernames:", "");
+                                a.Email = a.Email.Replace("Emails:", "");
+                                absentees.Add(a);
+                            }
                         }
-                        //remove from guest list if name is valid
-                        if (!string.IsNullOrWhiteSpace(guest.Name))
-                        {
-                            guests.Remove(guest);
-                        }
+                        
                     }
                 }//end of foreach loop
 

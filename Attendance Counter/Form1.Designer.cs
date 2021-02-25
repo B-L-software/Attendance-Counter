@@ -63,6 +63,8 @@ namespace Attendance_Counter
             this.tabAttendance = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvReport = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSaveCSV = new System.Windows.Forms.Button();
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.dlgOF = new System.Windows.Forms.OpenFileDialog();
@@ -76,6 +78,7 @@ namespace Attendance_Counter
             this.tabAttendance.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).BeginInit();
+            this.tableLayoutPanel7.SuspendLayout();
             this.tabSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -514,28 +517,56 @@ namespace Attendance_Counter
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 609F));
-            this.tableLayoutPanel2.Controls.Add(this.dgvReport, 1, 1);
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 786F));
+            this.tableLayoutPanel2.Controls.Add(this.dgvReport, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel7, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(786, 416);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // dgvReport
             // 
+            this.dgvReport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvReport.Location = new System.Drawing.Point(180, 56);
+            this.dgvReport.Location = new System.Drawing.Point(3, 39);
             this.dgvReport.Name = "dgvReport";
             this.dgvReport.RowTemplate.Height = 25;
-            this.dgvReport.Size = new System.Drawing.Size(603, 357);
+            this.dgvReport.Size = new System.Drawing.Size(780, 374);
             this.dgvReport.TabIndex = 0;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Controls.Add(this.btnSaveCSV, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(780, 30);
+            this.tableLayoutPanel7.TabIndex = 1;
+            // 
+            // btnSaveCSV
+            // 
+            this.btnSaveCSV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveCSV.Location = new System.Drawing.Point(3, 3);
+            this.btnSaveCSV.Name = "btnSaveCSV";
+            this.btnSaveCSV.Size = new System.Drawing.Size(106, 24);
+            this.btnSaveCSV.TabIndex = 0;
+            this.btnSaveCSV.Text = "Save To CSV";
+            this.btnSaveCSV.UseVisualStyleBackColor = true;
             // 
             // tabSettings
             // 
@@ -594,6 +625,7 @@ namespace Attendance_Counter
             this.tabAttendance.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).EndInit();
+            this.tableLayoutPanel7.ResumeLayout(false);
             this.tabSettings.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -635,9 +667,11 @@ namespace Attendance_Counter
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtPollDate;
         private System.Windows.Forms.TextBox txtKH;
-        private System.Windows.Forms.DataGridView dgvReport;
         private System.Windows.Forms.TextBox txtHost;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.DataGridView dgvReport;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.Button btnSaveCSV;
     }
 }
 

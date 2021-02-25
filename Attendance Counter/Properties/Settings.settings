@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Attendance_Counter.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DefaultStoragePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PartStart" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name (Original Name)</Value>
+    </Setting>
+    <Setting Name="PollStart" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CSVDelimiter" Type="System.String" Scope="User">
+      <Value Profile="(Default)">,</Value>
+    </Setting>
+    <Setting Name="PollDateFinder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bellefontaine Congregation's Weekly Meetings Please have your Name displayed to enter meeting</Value>
+    </Setting>
+    <Setting Name="CongregationName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bellefontaine Congregation</Value>
+    </Setting>
+    <Setting Name="CongregationEmail" Type="System.String" Scope="User">
+      <Value Profile="(Default)">bellefontainecongregation@gmail.com</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

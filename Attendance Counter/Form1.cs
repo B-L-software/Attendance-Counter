@@ -32,8 +32,9 @@ namespace Attendance_Counter
         string reportfn =  DateTime.Today.ToString("MM-dd-yyyy") + "_Report.csv";
         string guestName = "";
         string guestEmail = "";
-        int defaultpoll = 0;
-
+        bool moveServiceGroup = false;
+        TreeNode tnMoveServiceGroup;
+        TreeNode tnMoveSGParent;
 
 
         //stucts
@@ -279,16 +280,53 @@ namespace Attendance_Counter
                 txtEM.Clear();
                 txtUN.Clear();
                 txtDefaultCount.Clear();
+                if (moveServiceGroup)
+                {
+                    if (tvSG.SelectedNode.Level == 2)
+                    {
+                        tvSG.SelectedNode = tvSG.SelectedNode.Parent.Parent;
+                    }
+                    else if (tvSG.SelectedNode.Level == 1)
+                    {
+                        tvSG.SelectedNode = tvSG.SelectedNode.Parent;
+                    }
+
+                    string msg = string.Format("Are you sure you want to move {0} to {1}",tnMoveServiceGroup.Text, tvSG.SelectedNode.Text);
+                    DialogResult mbb = MessageBox.Show(msg, "Move to new Service Group!", MessageBoxButtons.YesNoCancel);
+
+                    switch (mbb)
+                    {
+                        case DialogResult.Yes:
+                            tvSG.SelectedNode.Nodes.Add(tnMoveServiceGroup);
+                            tnMoveServiceGroup = null;
+                            tnMoveSGParent = null;
+                            moveServiceGroup = false;
+                            //save tree
+                            SaveTree(tvSG, cfgPath);
+                            break;
+                        case DialogResult.No:
+                            tvSG.SelectedNode = null;
+                            break;
+                        case DialogResult.Cancel:
+                            tnMoveSGParent.Nodes.Add(tnMoveServiceGroup);
+                            tnMoveServiceGroup = null;
+                            tnMoveSGParent = null;
+                            moveServiceGroup = false;
+                            break;
+                    }
+
+
+                }
                 if (tvSG.SelectedNode != null)
                 {
-                    if (tvSG.SelectedNode.Parent == null)
+                    if (tvSG.SelectedNode.Level == 0)
                     {
                         //node is root so it is a service group node
                         txtServiceGroup.Text = tvSG.SelectedNode.Text;
                         //nothing more to do here because we need to select the member name to
                         //get all the info
                     }
-                    else if(tvSG.SelectedNode.Parent.Parent == null)
+                    else if(tvSG.SelectedNode.Level == 1)
                     {
                         //this is the member name because it is the second tier node
                         txtServiceGroup.Text = tvSG.SelectedNode.Parent.Text;
@@ -309,7 +347,7 @@ namespace Attendance_Counter
                             }
                         }
                     }
-                    else if (tvSG.SelectedNode.Parent.Parent.Parent == null)
+                    else if (tvSG.SelectedNode.Level == 2)
                     {
                         tvSG.SelectedNode = tvSG.SelectedNode.Parent;
                     }
@@ -802,7 +840,6 @@ namespace Attendance_Counter
             try
             {
                 //clear all vars
-                defaultpoll = 0;
                 dgvReport.DataSource = null;
                 dgvReport.Refresh();
                 absentees.Clear();
@@ -1266,8 +1303,19 @@ namespace Attendance_Counter
             try
             {
                 if (string.IsNullOrWhiteSpace(txtKH.Text)) { return; }
+
+                //add listing to poll that seperates KHConf from Zoom
+                if (!poll.EndsWith(Environment.NewLine))
+                {
+                    poll += Environment.NewLine;
+                }
+                //#,User Name,User Email,Submitted Date/Time,poll message, poll
+                poll += "0,!!KHConf BELOW!!, , , , , VVVV" + Environment.NewLine;
+
+
+
                 //parse line by line
-                
+
                 string[] khln = txtKH.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                 int i = 0;
                 string name = "";
@@ -1410,6 +1458,34 @@ namespace Attendance_Counter
             catch (Exception ex)
             {
                 MessageBox.Show("dgvReport_CellEndEdit\n" + ex.Message);
+            }
+        }
+
+        private void btnMove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (tvSG.SelectedNode != null)
+                {
+                    if (tvSG.SelectedNode.Level > 0)
+                    {
+                        string msg = "Are you sure you want to move:" + tvSG.SelectedNode.Text + " To another Service Group?";
+                        if (MessageBox.Show(msg, "Move to new Service Group!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            tnMoveServiceGroup = tvSG.SelectedNode;
+                            tnMoveSGParent = tvSG.SelectedNode.Parent;
+                            tvSG.SelectedNode.Remove();
+                            tvSG.CollapseAll();
+                            msg = "Select a service group to add to:";
+                            MessageBox.Show(msg, "Move to new Service Group!");
+                            moveServiceGroup = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnMove_Click\n" + ex.Message);
             }
         }
     }

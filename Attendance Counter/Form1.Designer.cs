@@ -639,6 +639,7 @@ namespace Attendance_Counter
             this.btnMove.TabIndex = 3;
             this.btnMove.Text = "Move";
             this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
             // 
             // tabAttendance
             // 

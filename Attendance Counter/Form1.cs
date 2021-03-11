@@ -892,6 +892,31 @@ namespace Attendance_Counter
 
                 dgvReport.DataSource = reports;
 
+                int attnd = 0;
+                int nonpoll = 0;
+                foreach (DataGridViewRow row in dgvReport.Rows)
+                {
+                    if (row.Cells["Poll_Result"].Value != null)
+                    {
+                        try
+                        {
+                            attnd += int.Parse(row.Cells["Poll_Result"].Value.ToString());
+                        }
+                        catch { }
+                    }
+                    if (row.Cells["Default_Count"].Value != null)
+                    {
+                        try
+                        {
+                            nonpoll += int.Parse(row.Cells["Default_Count"].Value.ToString());
+                        }
+                        catch { }
+                    }
+                }
+
+                txtAttendance.Text = attnd.ToString();
+                txtNonPolledTotal.Text = nonpoll.ToString();
+
             }
             catch (Exception ex)
             {

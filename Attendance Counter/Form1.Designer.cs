@@ -77,11 +77,29 @@ namespace Attendance_Counter
             this.label9 = new System.Windows.Forms.Label();
             this.txtAttendance = new System.Windows.Forms.TextBox();
             this.txtNonPolledTotal = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtATotal = new System.Windows.Forms.TextBox();
+            this.tabViewer = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
+            this.lstbxFolder = new System.Windows.Forms.ListBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.dgViewer = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSelectFolder = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtVAttend = new System.Windows.Forms.TextBox();
+            this.txtVNonPolled = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtVTotal = new System.Windows.Forms.TextBox();
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.dlgOF = new System.Windows.Forms.OpenFileDialog();
             this.dlgSF = new System.Windows.Forms.SaveFileDialog();
             this.dlgSCSV = new System.Windows.Forms.SaveFileDialog();
+            this.dlgFB = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1.SuspendLayout();
             this.tabSG.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -94,6 +112,12 @@ namespace Attendance_Counter
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
+            this.tabViewer.SuspendLayout();
+            this.tableLayoutPanel10.SuspendLayout();
+            this.tableLayoutPanel11.SuspendLayout();
+            this.tableLayoutPanel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).BeginInit();
+            this.tableLayoutPanel12.SuspendLayout();
             this.tabSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,6 +125,7 @@ namespace Attendance_Counter
             // 
             this.tabControl1.Controls.Add(this.tabSG);
             this.tabControl1.Controls.Add(this.tabAttendance);
+            this.tabControl1.Controls.Add(this.tabViewer);
             this.tabControl1.Controls.Add(this.tabSettings);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -683,19 +708,24 @@ namespace Attendance_Counter
             // 
             // tableLayoutPanel7
             // 
-            this.tableLayoutPanel7.ColumnCount = 6;
+            this.tableLayoutPanel7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel7.ColumnCount = 8;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 57F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel7.Controls.Add(this.btnSaveCSV, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.label8, 1, 0);
             this.tableLayoutPanel7.Controls.Add(this.label9, 3, 0);
             this.tableLayoutPanel7.Controls.Add(this.txtAttendance, 2, 0);
             this.tableLayoutPanel7.Controls.Add(this.txtNonPolledTotal, 4, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Controls.Add(this.label13, 5, 0);
+            this.tableLayoutPanel7.Controls.Add(this.txtATotal, 6, 0);
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
@@ -735,9 +765,9 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(295, 0);
+            this.label9.Location = new System.Drawing.Point(257, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(80, 37);
+            this.label9.Size = new System.Drawing.Size(93, 37);
             this.label9.TabIndex = 2;
             this.label9.Text = "Non-Polled Total:";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -749,18 +779,252 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAttendance.Location = new System.Drawing.Point(202, 3);
             this.txtAttendance.Name = "txtAttendance";
-            this.txtAttendance.Size = new System.Drawing.Size(87, 23);
+            this.txtAttendance.ReadOnly = true;
+            this.txtAttendance.Size = new System.Drawing.Size(49, 23);
             this.txtAttendance.TabIndex = 3;
+            this.txtAttendance.TextChanged += new System.EventHandler(this.txtAttendance_TextChanged);
             // 
             // txtNonPolledTotal
             // 
             this.txtNonPolledTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNonPolledTotal.Location = new System.Drawing.Point(381, 3);
+            this.txtNonPolledTotal.Location = new System.Drawing.Point(356, 3);
             this.txtNonPolledTotal.Name = "txtNonPolledTotal";
-            this.txtNonPolledTotal.Size = new System.Drawing.Size(85, 23);
+            this.txtNonPolledTotal.ReadOnly = true;
+            this.txtNonPolledTotal.Size = new System.Drawing.Size(51, 23);
             this.txtNonPolledTotal.TabIndex = 4;
+            this.txtNonPolledTotal.TextChanged += new System.EventHandler(this.txtNonPolledTotal_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(413, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 37);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "Total:";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtATotal
+            // 
+            this.txtATotal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtATotal.Location = new System.Drawing.Point(468, 3);
+            this.txtATotal.Name = "txtATotal";
+            this.txtATotal.ReadOnly = true;
+            this.txtATotal.Size = new System.Drawing.Size(61, 23);
+            this.txtATotal.TabIndex = 6;
+            // 
+            // tabViewer
+            // 
+            this.tabViewer.Controls.Add(this.tableLayoutPanel10);
+            this.tabViewer.Location = new System.Drawing.Point(4, 24);
+            this.tabViewer.Name = "tabViewer";
+            this.tabViewer.Size = new System.Drawing.Size(792, 446);
+            this.tabViewer.TabIndex = 3;
+            this.tabViewer.Text = "Viewer";
+            this.tabViewer.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel10
+            // 
+            this.tableLayoutPanel10.ColumnCount = 1;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 792F));
+            this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel11, 0, 1);
+            this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel12, 0, 0);
+            this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
+            this.tableLayoutPanel10.RowCount = 2;
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(792, 446);
+            this.tableLayoutPanel10.TabIndex = 0;
+            // 
+            // tableLayoutPanel11
+            // 
+            this.tableLayoutPanel11.ColumnCount = 2;
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.66412F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.33588F));
+            this.tableLayoutPanel11.Controls.Add(this.tableLayoutPanel13, 0, 0);
+            this.tableLayoutPanel11.Controls.Add(this.dgViewer, 1, 0);
+            this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(3, 43);
+            this.tableLayoutPanel11.Name = "tableLayoutPanel11";
+            this.tableLayoutPanel11.RowCount = 1;
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(786, 400);
+            this.tableLayoutPanel11.TabIndex = 0;
+            // 
+            // tableLayoutPanel13
+            // 
+            this.tableLayoutPanel13.ColumnCount = 1;
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel13.Controls.Add(this.lstbxFolder, 0, 1);
+            this.tableLayoutPanel13.Controls.Add(this.label10, 0, 0);
+            this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel13.Name = "tableLayoutPanel13";
+            this.tableLayoutPanel13.RowCount = 2;
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(179, 394);
+            this.tableLayoutPanel13.TabIndex = 0;
+            // 
+            // lstbxFolder
+            // 
+            this.lstbxFolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstbxFolder.FormattingEnabled = true;
+            this.lstbxFolder.ItemHeight = 15;
+            this.lstbxFolder.Location = new System.Drawing.Point(3, 33);
+            this.lstbxFolder.Name = "lstbxFolder";
+            this.lstbxFolder.Size = new System.Drawing.Size(173, 358);
+            this.lstbxFolder.TabIndex = 0;
+            this.lstbxFolder.SelectedIndexChanged += new System.EventHandler(this.lstbxFolder_SelectedIndexChanged);
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label10.Location = new System.Drawing.Point(3, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(173, 30);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Click on File to Load:";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dgViewer
+            // 
+            this.dgViewer.AllowUserToAddRows = false;
+            this.dgViewer.AllowUserToDeleteRows = false;
+            this.dgViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgViewer.Location = new System.Drawing.Point(188, 3);
+            this.dgViewer.Name = "dgViewer";
+            this.dgViewer.ReadOnly = true;
+            this.dgViewer.RowTemplate.Height = 25;
+            this.dgViewer.Size = new System.Drawing.Size(595, 394);
+            this.dgViewer.TabIndex = 1;
+            // 
+            // tableLayoutPanel12
+            // 
+            this.tableLayoutPanel12.ColumnCount = 8;
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 182F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 57F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel12.Controls.Add(this.btnSelectFolder, 0, 0);
+            this.tableLayoutPanel12.Controls.Add(this.label11, 1, 0);
+            this.tableLayoutPanel12.Controls.Add(this.label12, 3, 0);
+            this.tableLayoutPanel12.Controls.Add(this.txtVAttend, 2, 0);
+            this.tableLayoutPanel12.Controls.Add(this.txtVNonPolled, 4, 0);
+            this.tableLayoutPanel12.Controls.Add(this.label14, 5, 0);
+            this.tableLayoutPanel12.Controls.Add(this.txtVTotal, 6, 0);
+            this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
+            this.tableLayoutPanel12.RowCount = 1;
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(786, 34);
+            this.tableLayoutPanel12.TabIndex = 1;
+            // 
+            // btnSelectFolder
+            // 
+            this.btnSelectFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSelectFolder.Location = new System.Drawing.Point(3, 3);
+            this.btnSelectFolder.Name = "btnSelectFolder";
+            this.btnSelectFolder.Size = new System.Drawing.Size(176, 28);
+            this.btnSelectFolder.TabIndex = 0;
+            this.btnSelectFolder.Text = "Select Folder";
+            this.btnSelectFolder.UseVisualStyleBackColor = true;
+            this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(185, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(79, 34);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Attendance:";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(323, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(111, 34);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Non-Polled Total:";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtVAttend
+            // 
+            this.txtVAttend.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVAttend.Location = new System.Drawing.Point(270, 3);
+            this.txtVAttend.Name = "txtVAttend";
+            this.txtVAttend.ReadOnly = true;
+            this.txtVAttend.Size = new System.Drawing.Size(47, 23);
+            this.txtVAttend.TabIndex = 6;
+            this.txtVAttend.TextChanged += new System.EventHandler(this.txtVAttend_TextChanged);
+            // 
+            // txtVNonPolled
+            // 
+            this.txtVNonPolled.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVNonPolled.Location = new System.Drawing.Point(440, 3);
+            this.txtVNonPolled.Name = "txtVNonPolled";
+            this.txtVNonPolled.ReadOnly = true;
+            this.txtVNonPolled.Size = new System.Drawing.Size(47, 23);
+            this.txtVNonPolled.TabIndex = 4;
+            this.txtVNonPolled.TextChanged += new System.EventHandler(this.txtVNonPolled_TextChanged);
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(493, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(51, 34);
+            this.label14.TabIndex = 7;
+            this.label14.Text = "Total:";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtVTotal
+            // 
+            this.txtVTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVTotal.Location = new System.Drawing.Point(550, 3);
+            this.txtVTotal.Name = "txtVTotal";
+            this.txtVTotal.ReadOnly = true;
+            this.txtVTotal.Size = new System.Drawing.Size(50, 23);
+            this.txtVTotal.TabIndex = 8;
             // 
             // tabSettings
             // 
@@ -801,6 +1065,10 @@ namespace Attendance_Counter
             this.dlgSCSV.DefaultExt = "csv";
             this.dlgSCSV.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
             // 
+            // dlgFB
+            // 
+            this.dlgFB.ShowNewFolderButton = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -829,6 +1097,14 @@ namespace Attendance_Counter
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
+            this.tabViewer.ResumeLayout(false);
+            this.tableLayoutPanel10.ResumeLayout(false);
+            this.tableLayoutPanel11.ResumeLayout(false);
+            this.tableLayoutPanel13.ResumeLayout(false);
+            this.tableLayoutPanel13.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).EndInit();
+            this.tableLayoutPanel12.ResumeLayout(false);
+            this.tableLayoutPanel12.PerformLayout();
             this.tabSettings.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -888,6 +1164,24 @@ namespace Attendance_Counter
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtAttendance;
         private System.Windows.Forms.TextBox txtNonPolledTotal;
+        private System.Windows.Forms.TabPage tabViewer;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
+        private System.Windows.Forms.ListBox lstbxFolder;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnSelectFolder;
+        private System.Windows.Forms.FolderBrowserDialog dlgFB;
+        private System.Windows.Forms.DataGridView dgViewer;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtVAttend;
+        private System.Windows.Forms.TextBox txtVNonPolled;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtATotal;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtVTotal;
     }
 }
 

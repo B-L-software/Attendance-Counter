@@ -119,5 +119,17 @@ namespace Attendance_Counter.Properties {
                 this["DelimterReplacement"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Folder {
+            get {
+                return ((string)(this["Folder"]));
+            }
+            set {
+                this["Folder"] = value;
+            }
+        }
     }
 }

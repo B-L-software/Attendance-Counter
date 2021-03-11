@@ -789,6 +789,16 @@ namespace Attendance_Counter
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedTab.Text == "Viewer" && !string.IsNullOrEmpty(Properties.Settings.Default.Folder))
+            {
+                lstbxFolder.Items.Clear();
+                DirectoryInfo dinfo = new DirectoryInfo(Properties.Settings.Default.Folder);
+                FileInfo[] Files = dinfo.GetFiles("*.csv");
+                foreach (FileInfo file in Files)
+                {
+                    lstbxFolder.Items.Add(file.Name);
+                }
+            }
 
         }
 
@@ -1486,6 +1496,132 @@ namespace Attendance_Counter
             catch (Exception ex)
             {
                 MessageBox.Show("btnMove_Click\n" + ex.Message);
+            }
+        }
+
+        private void btnSelectFolder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dlgFB.ShowDialog() == DialogResult.OK)
+                {
+                    lstbxFolder.Items.Clear();
+                    DirectoryInfo dinfo = new DirectoryInfo(dlgFB.SelectedPath);
+                    FileInfo[] Files = dinfo.GetFiles("*.csv");
+                    foreach (FileInfo file in Files)
+                    {
+                        Properties.Settings.Default.Folder = dlgFB.SelectedPath;
+                        Properties.Settings.Default.Save();
+                        lstbxFolder.Items.Add(file.Name);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnSelectFolder_Click\n" + ex.Message);
+            }
+        }
+
+        public DataTable readCSV(string filePath)
+        {
+            var dt = new DataTable();
+            // Creating the columns
+            File.ReadLines(filePath).Take(1)
+                .SelectMany(x => x.Split(new[] { ',' }, StringSplitOptions.None))
+                .ToList()
+                .ForEach(x => dt.Columns.Add(x.Trim()));
+
+            // Adding the rows
+            File.ReadLines(filePath).Skip(1)
+                .Select(x => x.Split(','))
+                .ToList()
+                .ForEach(line => dt.Rows.Add(line));
+            return dt;
+        }
+
+        private void lstbxFolder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                dgViewer.DataSource = null;
+                dgViewer.Refresh();
+                dgViewer.DataSource = readCSV(Properties.Settings.Default.Folder + @"\" + lstbxFolder.SelectedItem.ToString());
+                int attnd = 0;
+                int nonpoll = 0;
+                foreach (DataGridViewRow row in dgViewer.Rows)
+                {
+                    if (row.Cells[3].Value != null)
+                    {
+                        try
+                        {
+                            attnd += int.Parse(row.Cells[3].Value.ToString());
+                        }
+                        catch { }
+                    }
+                    if (row.Cells[5].Value != null)
+                    {
+                        try
+                        {
+                            nonpoll += int.Parse(row.Cells[5].Value.ToString());
+                        }
+                        catch { }
+                    }
+                }
+
+                txtVAttend.Text = attnd.ToString();
+                txtVNonPolled.Text = nonpoll.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("lstbxFolder_SelectedIndexChanged\n" + ex.Message);
+            }
+        }
+
+        private void txtVAttend_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                txtVTotal.Text = (int.Parse(txtVAttend.Text) + int.Parse(txtVNonPolled.Text)).ToString();
+            }
+            catch
+            {
+                txtVTotal.Text = "";
+            }
+        }
+
+        private void txtVNonPolled_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                txtVTotal.Text = (int.Parse(txtVAttend.Text) + int.Parse(txtVNonPolled.Text)).ToString();
+            }
+            catch 
+            {
+                txtVTotal.Text = "";            
+            }
+        }
+
+        private void txtAttendance_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                txtATotal.Text = (int.Parse(txtAttendance.Text) + int.Parse(txtNonPolledTotal.Text)).ToString();
+            }
+            catch
+            {
+                txtATotal.Text = "";
+            }
+        }
+
+        private void txtNonPolledTotal_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                txtATotal.Text = (int.Parse(txtAttendance.Text) + int.Parse(txtNonPolledTotal.Text)).ToString();
+            }
+            catch
+            {
+                txtATotal.Text = "";
             }
         }
     }

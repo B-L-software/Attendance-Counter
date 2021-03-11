@@ -11,7 +11,7 @@ namespace Attendance_Counter
         public string Users_Who_Took_Poll { get; set; }
         public string Poll_Result { get; set; }
         public string Failed_To_Take_Poll { get; set; }
-        public string _ { get; set; }
+        public string Default_Count { get; set; }
         public string Missed_Meeting_MemberName { get; set; }
         public string M_M_UserName { get; set; }
         public string M_M_Email { get; set; }

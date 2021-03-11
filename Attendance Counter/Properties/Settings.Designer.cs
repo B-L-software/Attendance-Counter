@@ -107,5 +107,17 @@ namespace Attendance_Counter.Properties {
                 this["CongregationEmail"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DelimterReplacement {
+            get {
+                return ((string)(this["DelimterReplacement"]));
+            }
+            set {
+                this["DelimterReplacement"] = value;
+            }
+        }
     }
 }

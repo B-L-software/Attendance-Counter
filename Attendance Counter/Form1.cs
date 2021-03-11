@@ -29,10 +29,10 @@ namespace Attendance_Counter
         string poll = "";
         List<report> reports = new List<report>();
         List<string> nonpollers = new List<string>();
-        //string reportfn =  DateTime.Today.ToString("MM-dd-yyyy") + "_Report.csv";
+        string reportfn =  DateTime.Today.ToString("MM-dd-yyyy") + "_Report.csv";
         string guestName = "";
         string guestEmail = "";
-
+        int defaultpoll = 0;
 
 
 
@@ -89,7 +89,7 @@ namespace Attendance_Counter
                         TreeNode nnd = nd.Nodes.Add("Member Name:" + txtMN.Text.Trim());
                         nnd.Nodes.Add("Emails:" + txtEM.Text.Trim());
                         nnd.Nodes.Add("Usernames:" + txtUN.Text.Trim());
-
+                        nnd.Nodes.Add("DefaultCount:" + txtDefaultCount.Text.Trim());
                     }
                     
                 }
@@ -100,7 +100,7 @@ namespace Attendance_Counter
                     TreeNode nnd = nd.Nodes.Add("Member Name:" + txtMN.Text.Trim());
                     nnd.Nodes.Add("Emails:" + txtEM.Text.Trim());
                     nnd.Nodes.Add("Usernames:" + txtUN.Text.Trim());
-
+                    nnd.Nodes.Add("DefaultCount:" + txtDefaultCount.Text.Trim());
                 }
 
                 //save tree
@@ -108,6 +108,7 @@ namespace Attendance_Counter
                 txtEM.Clear();
                 txtMN.Clear();
                 txtUN.Clear();
+                txtDefaultCount.Text = "1";
 
             }
             catch (Exception ex)
@@ -277,7 +278,7 @@ namespace Attendance_Counter
                 txtMN.Clear();
                 txtEM.Clear();
                 txtUN.Clear();
-
+                txtDefaultCount.Clear();
                 if (tvSG.SelectedNode != null)
                 {
                     if (tvSG.SelectedNode.Parent == null)
@@ -294,13 +295,17 @@ namespace Attendance_Counter
                         txtMN.Text = tvSG.SelectedNode.Text.Replace("Member Name:","");
                         foreach(TreeNode node in tvSG.SelectedNode.Nodes)
                         {
-                            if (node.Text.IndexOf("Emails:") > -1)
+                            if (node.Text.Contains("Emails:") )
                             {
                                 txtEM.Text = node.Text.Replace("Emails:","");
                             }
-                            else
+                            else if (node.Text.Contains("Usernames:"))
                             {
                                 txtUN.Text = node.Text.Replace("Usernames:", "");
+                            }
+                            else if (node.Text.Contains("DefaultCount:"))
+                            {
+                                txtDefaultCount.Text = node.Text.Replace("DefaultCount:", "");
                             }
                         }
                     }
@@ -334,15 +339,20 @@ namespace Attendance_Counter
                         //this is the member name because it is the second tier node
                         tvSG.SelectedNode.Parent.Text = txtServiceGroup.Text;
                         tvSG.SelectedNode.Text = "Member Name:" + txtMN.Text;
+                        //tvSG.SelectedNode.Nodes.Add("DefaultCount:" + txtDefaultCount.Text.Trim());
                         foreach (TreeNode node in tvSG.SelectedNode.Nodes)
                         {
-                            if (node.Text.IndexOf("Emails:") > -1)
+                            if (node.Text.Contains("Emails:"))
                             {
                                 tvSG.SelectedNode.Nodes[node.Index].Text = "Emails:" + txtEM.Text;
                             }
-                            else
+                            else if (node.Text.Contains("Usernames:"))
                             {
                                 tvSG.SelectedNode.Nodes[node.Index].Text = "Usernames:" + txtUN.Text;
+                            }
+                            else if (node.Text.Contains("DefaultCount:"))
+                            {
+                                tvSG.SelectedNode.Nodes[node.Index].Text = "DefaultCount:" + txtDefaultCount.Text.Trim();
                             }
                         }
                     }
@@ -746,8 +756,11 @@ namespace Attendance_Counter
 
         private void SaveToCSV(DataGridView DGV, string filename)
         {
+            string dlmtr = Properties.Settings.Default.CSVDelimiter;
+            string drepl = Properties.Settings.Default.DelimterReplacement;
             if (File.Exists(filename))
             {
+
                 try
                 {
                     File.Delete(filename);
@@ -762,14 +775,22 @@ namespace Attendance_Counter
             string[] output = new string[DGV.RowCount + 1];
             for (int i = 0; i < columnCount; i++)
             {
-                columnNames += DGV.Columns[i].Name.ToString() + Properties.Settings.Default.CSVDelimiter;
+                columnNames += DGV.Columns[i].Name.ToString().Replace("_", " ") + Properties.Settings.Default.CSVDelimiter;
             }
             output[0] += columnNames;
             for (int i = 1; (i - 1) < DGV.RowCount; i++)
             {
                 for (int j = 0; j < columnCount; j++)
                 {
-                    output[i] += DGV.Rows[i - 1].Cells[j].Value.ToString() + Properties.Settings.Default.CSVDelimiter;
+                    if (DGV.Rows[i - 1].Cells[j].Value == null)
+                    {
+                        output[i] += dlmtr;
+                    }
+                    else
+                    {
+
+                        output[i] += DGV.Rows[i - 1].Cells[j].Value.ToString().Replace(dlmtr, drepl) + dlmtr;
+                    }
                 }
             }
             System.IO.File.WriteAllLines(filename, output, System.Text.Encoding.UTF8);
@@ -780,8 +801,25 @@ namespace Attendance_Counter
         {
             try
             {
+                //clear all vars
+                defaultpoll = 0;
+                dgvReport.DataSource = null;
+                dgvReport.Refresh();
+                absentees.Clear();
+                nonpollers.Clear();
+
+                GetKHConf();
+                //add host to the poll count
+                if (!poll.EndsWith(Environment.NewLine))
+                {
+                    poll += Environment.NewLine;
+                }
+                //#,User Name,User Email,Submitted Date/Time,poll message, poll
+                poll += "0, Host, , , , ,1" + Environment.NewLine;
+
                 ParseServiceGroups();
                 LoadPoll();
+                
 
                 //first check the dates and if they don't match, give a warning                
                 if (txtPartDate.Text != txtPollDate.Text)
@@ -820,6 +858,7 @@ namespace Attendance_Counter
                     {
                         //this person didn't take the poll so add them to the list
                         nonpollers.Add(nonpolster);
+                                              
                     }
 
                 }
@@ -835,12 +874,22 @@ namespace Attendance_Counter
                     
                 }
 
+                
 
                 AddPollTakers();
                 AddNonPollers();
                 AddAbsentees();
                 AddGuests();
-                                
+
+                reports[0].Meeting_Date = txtPartDate.Text;
+                reports[1].Meeting_Date = "Non-Poll Takers:";
+                reports[2].Meeting_Date = "Total:";
+
+                reports[0].Attendance = string.Format("=SUM(D2:D{0})", reports.Count + 5);
+                reports[1].Attendance = string.Format("=SUM(F2:F{0})", nonpollers.Count + 5);
+                reports[2].Attendance = "=SUM(B2:B3)";
+
+
                 dgvReport.DataSource = reports;
 
             }
@@ -854,53 +903,16 @@ namespace Attendance_Counter
         {
             try
             {
-                //add our first two values of date and total attendance
-                //first get the attendance count
-                int attnd = 1; //we start with 1 because we are including the host
+
+                int i = 0;
 
                 foreach (PollTaker p in pollTakers)
                 {
-                    try
-                    {
-                        //add the poll value to the attendance count
-                        attnd += int.Parse(p.PollResult);
-                    }
-                    catch
-                    {
-                        //nothing to do here
-                        continue;
-                    }
 
-                }
+                    reports[i].Users_Who_Took_Poll = p.Username;
+                    reports[i].Poll_Result = p.PollResult;
+                    i++;
 
-                string md = txtPartDate.Text;
-                int i = 0;
-                report firstr = new report();
-                bool nodate = false;
-                foreach (PollTaker p in pollTakers)
-                {                    
-                    if (attnd > 0)
-                    {
-                        firstr.Attendance = attnd.ToString();
-                        firstr.Meeting_Date = md;
-                        attnd = 0;
-                        nodate = true;
-                    }
-                    else
-                    {
-                        
-                        reports[i].Attendance = firstr.Attendance;
-                        reports[i].Meeting_Date = firstr.Meeting_Date;
-                        reports[i].Users_Who_Took_Poll = p.Username;
-                        reports[i].Poll_Result = p.PollResult;
-                        i++;
-                        if (nodate)
-                        {
-                            firstr.Attendance = "";
-                            firstr.Meeting_Date = "";
-                            nodate = false;
-                        }
-                    }
                 }
             }
             catch (Exception ex)
@@ -919,6 +931,35 @@ namespace Attendance_Counter
                 {
                     if (np == Properties.Settings.Default.CongregationName) { continue; }
                     reports[i].Failed_To_Take_Poll = np;
+                    bool dnotfound = true;
+                    foreach (TreeNode grp in tvSG.Nodes)
+                    {
+                        foreach (TreeNode mn in grp.Nodes)
+                        {
+                            if (mn.Nodes[1].Text.ToLower().Contains(np.ToLower()))
+                            {
+                                dnotfound = false;
+                                try
+                                {
+                                    reports[i].Default_Count = mn.Nodes[2].Text.Replace("DefaultCount:","");
+                                }
+                                catch
+                                {
+                                    reports[i].Default_Count = "Undefined";
+                                }
+                                break;
+                            }
+                        }
+                        if (!dnotfound)
+                        {
+                            break;
+                        }
+                    }
+                    if (dnotfound)
+                    {
+                        reports[i].Default_Count = "Undefined";
+
+                    }
                     i++;
                 }
             }
@@ -1161,17 +1202,189 @@ namespace Attendance_Counter
             {
                 if (!string.IsNullOrWhiteSpace(txtSearchGroups.Text))
                 {
-                    TreeNode fndnode = FindFirstNode(txtSearchGroups.Text, tvSG);
-                    if (fndnode != null)
+                    tvSG.Focus();
+                    foreach (TreeNode Grp in tvSG.Nodes) //group name
                     {
-                        tvSG.SelectedNode = fndnode;
+                        if (Grp.Text.ToLower().Contains(txtSearchGroups.Text.ToLower().Trim()))
+                        {
+                            tvSG.SelectedNode = Grp;
+                            break;
+                        }
+                        foreach (TreeNode MN in Grp.Nodes)
+                        {
+                            if (MN.Text.ToLower().Contains(txtSearchGroups.Text.ToLower().Trim()))
+                            {
+                                tvSG.SelectedNode = MN;
+                                break;
+                            }
+                            foreach (TreeNode EU in MN.Nodes)
+                            {
+                                if (EU.Text.ToLower().Contains(txtSearchGroups.Text.ToLower().Trim()))
+                                {
+                                    tvSG.SelectedNode = EU;
+                                    break;
+                                }
+                            }
+                        }
                     }
-                    
+
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("btnSearchGroups_Click\n" + ex.Message);
+            }
+        }
+
+        private void GetKHConf()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtKH.Text)) { return; }
+                //parse line by line
+                
+                string[] khln = txtKH.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                int i = 0;
+                string name = "";
+                string count = "";
+                foreach (string ln in khln)
+                {                    
+                    //deterimine if phone number or Name or time or count
+                    switch (i)
+                    {
+                        case 0:
+                            name = ln.Trim();
+                            break;
+                        case 1:
+                            if (!ln.Contains("->")) //it's not time so must be name
+                            {
+                                name = ln.Trim();
+                            }
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            try
+                            {
+                                if (int.Parse(ln) > 0)
+                                {
+                                    count = ln.Trim();
+                                    i = 0;
+                                }
+                            }
+                            catch 
+                            {
+
+                            }
+                            break;
+                        case 4:
+                            count = ln.Trim();
+                            i = 0;
+                            break;
+                        default:
+                            i = 0;
+                            break;
+                    }
+                    i++;
+                    if (!string.IsNullOrEmpty(count))
+                    {
+                        //check if name is already in particpants list if so ignore
+                        bool nameisnew = true;
+                        foreach(string n in lstbxName.Items)
+                        {
+                            if (n.ToLower().Contains(name.ToLower()))
+                            {
+                                nameisnew = false;
+                            }
+                        }
+                        if (nameisnew)
+                        {
+                            //add name and count to participants and poll
+                            lstbxName.Items.Add(name);
+                            lstbxEmail.Items.Add("");
+                            if (!poll.EndsWith(Environment.NewLine))
+                            {
+                                poll += Environment.NewLine;
+                            }
+                            //#,User Name,User Email,Submitted Date/Time,poll message, poll
+                            poll += "0," + name + ", e, d, m, " + ", " + count + Environment.NewLine;                            
+                        }
+                        i = 0;
+                        count = "";
+                    }
+                    
+                } //end foreach
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("KHConf\n" + ex.Message);
+            }
+        }
+
+        private void btnSaveCSV_Click(object sender, EventArgs e)
+        {
+            try
+            {                
+                dlgSCSV.FileName = reportfn;
+                if (dlgSCSV.ShowDialog() == DialogResult.OK)
+                {
+                    SaveToCSV(dgvReport, dlgSCSV.FileName);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnSaveCSV_Click\n" + ex.Message);
+            }
+        }
+
+        private void txtSearchGroups_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                btnSearchGroups.PerformClick();
+            }
+        }
+
+        private void txtDefaultCount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void dgvReport_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                int attnd = 0;
+                int nonpoll = 0;
+                foreach (DataGridViewRow row in dgvReport.Rows)
+                {
+                    if (row.Cells["Poll_Result"].Value != null)
+                    {
+                        try
+                        {
+                            attnd += int.Parse(row.Cells["Poll_Result"].Value.ToString());
+                        }
+                        catch { }
+                    }
+                    if (row.Cells["Default_Count"].Value != null)
+                    {
+                        try
+                        {
+                            nonpoll += int.Parse(row.Cells["Default_Count"].Value.ToString());
+                        }
+                        catch { }
+                    }
+                }
+
+                txtAttendance.Text = attnd.ToString();
+                txtNonPolledTotal.Text = nonpoll.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("dgvReport_CellEndEdit\n" + ex.Message);
             }
         }
     }

@@ -503,7 +503,7 @@ namespace Attendance_Counter
                     if (!string.IsNullOrWhiteSpace(txtHost.Text))
                     {
                         lstbxName.Items.Add(txtHost.Text.Trim());
-                        lstbxEmail.Items.Add("");
+                        lstbxEmail.Items.Add("HOST");
                     }
                     
                     foreach (string line in readline)
@@ -657,7 +657,7 @@ namespace Attendance_Counter
                         //add absentee if it isn't blank
                         if (!string.IsNullOrEmpty(a.MemberName))
                         {
-                            if (a.Username.ToUpper() != txtHost.Text.ToUpper().Trim())
+                            if (a.Username.ToUpper().IndexOf(txtHost.Text.ToUpper().Trim()) < 0 || string.IsNullOrEmpty(txtHost.Text.Trim()))
                             {
                                 a.MemberName = a.MemberName.Replace("Member Name:", "");
                                 a.Username = a.Username.Replace("Usernames:", "");
@@ -679,6 +679,7 @@ namespace Attendance_Counter
         {
             try
             {
+                txtPollDate.Text = "Poll not loaded!";
                 dlgOF.DefaultExt = "csv";
                 dlgOF.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
                 if (dlgOF.ShowDialog() == DialogResult.OK)
@@ -872,6 +873,8 @@ namespace Attendance_Counter
                 dgvReport.Refresh();
                 absentees.Clear();
                 nonpollers.Clear();
+                reports.Clear();
+
 
                 GetKHConf();
                 //add host to the poll count
@@ -906,12 +909,12 @@ namespace Attendance_Counter
                     string nonpolster = lstbxName.Items[i].ToString();
                     foreach (PollTaker pt in pollTakers)
                     {
-                        if (pt.Email.IndexOf(lstbxEmail.Items[i].ToString()) > -1)
+                        if (pt.Email.IndexOf(lstbxEmail.Items[i].ToString()) > -1 && !string.IsNullOrEmpty(lstbxEmail.Items[i].ToString()))
                         {
                             //it turns out they did take the poll so we can blank them out
                             nonpolster = "";
                         }
-                        if (pt.Username.IndexOf(lstbxName.Items[i].ToString()) > -1)
+                        if (pt.Username.IndexOf(lstbxName.Items[i].ToString()) > -1 && !string.IsNullOrEmpty(lstbxName.Items[i].ToString()))
                         {
                             //it turns out they did take the poll so we can blank them out
                             nonpolster = "";
@@ -925,7 +928,7 @@ namespace Attendance_Counter
                         nonpollers.Add(nonpolster);
                                               
                     }
-
+                   
                 }
                 //now that we have assembled our three categories: Poll Takers, Non-Poll Takers, Absentees
                 //we can put them all together in a list called reports and then load that into

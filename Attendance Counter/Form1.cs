@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,13 +12,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 namespace Attendance_Counter
 {
+    
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         //vars for app
@@ -121,7 +125,7 @@ namespace Attendance_Counter
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadServiceGroups();
-
+            
         }
 
         private void LoadServiceGroups()
@@ -592,9 +596,23 @@ namespace Attendance_Counter
                             HashSet<Guest> gsts = new HashSet<Guest>(guests);
                             foreach (Guest g in gsts)
                             {
-                                if (ueNode.Text.ToUpper().IndexOf(g.Name.ToUpper()) > -1)
+                                try
                                 {
-                                    guests.Remove(g);
+                                    if (ueNode.Text.ToUpper().IndexOf(g.Name.ToUpper()) > -1)
+                                    {
+                                        guests.Remove(g);
+                                    }
+                                    else if (!string.IsNullOrEmpty(g.Email))
+                                    {
+                                        if (ueNode.Text.ToUpper().IndexOf(g.Email.ToUpper()) > -1)
+                                        {
+                                            guests.Remove(g);
+                                        }
+                                    }
+                                } 
+                                catch
+                                {
+                                    continue;
                                 }
                             }
                             //Usernames and Emails are seperated by commas
@@ -1622,6 +1640,21 @@ namespace Attendance_Counter
             catch
             {
                 txtATotal.Text = "";
+            }
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                
+                //Process.Start(Application.StartupPath + @"\tutvid.mp4");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnPlay_Click\n" + ex.Message);
             }
         }
     }

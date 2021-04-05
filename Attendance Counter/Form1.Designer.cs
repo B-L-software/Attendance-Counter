@@ -94,8 +94,10 @@ namespace Attendance_Counter
             this.txtVNonPolled = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txtVTotal = new System.Windows.Forms.TextBox();
-            this.tabSettings = new System.Windows.Forms.TabPage();
+            this.tabHelp = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.vv = new LibVLCSharp.WinForms.VideoView();
+            this.btnPlay = new System.Windows.Forms.Button();
             this.dlgOF = new System.Windows.Forms.OpenFileDialog();
             this.dlgSF = new System.Windows.Forms.SaveFileDialog();
             this.dlgSCSV = new System.Windows.Forms.SaveFileDialog();
@@ -118,7 +120,9 @@ namespace Attendance_Counter
             this.tableLayoutPanel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).BeginInit();
             this.tableLayoutPanel12.SuspendLayout();
-            this.tabSettings.SuspendLayout();
+            this.tabHelp.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vv)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -126,7 +130,7 @@ namespace Attendance_Counter
             this.tabControl1.Controls.Add(this.tabSG);
             this.tabControl1.Controls.Add(this.tabAttendance);
             this.tabControl1.Controls.Add(this.tabViewer);
-            this.tabControl1.Controls.Add(this.tabSettings);
+            this.tabControl1.Controls.Add(this.tabHelp);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -1026,29 +1030,52 @@ namespace Attendance_Counter
             this.txtVTotal.Size = new System.Drawing.Size(50, 23);
             this.txtVTotal.TabIndex = 8;
             // 
-            // tabSettings
+            // tabHelp
             // 
-            this.tabSettings.Controls.Add(this.tableLayoutPanel6);
-            this.tabSettings.Location = new System.Drawing.Point(4, 24);
-            this.tabSettings.Name = "tabSettings";
-            this.tabSettings.Size = new System.Drawing.Size(792, 446);
-            this.tabSettings.TabIndex = 2;
-            this.tabSettings.Text = "Settings";
-            this.tabSettings.UseVisualStyleBackColor = true;
+            this.tabHelp.Controls.Add(this.tableLayoutPanel6);
+            this.tabHelp.Location = new System.Drawing.Point(4, 24);
+            this.tabHelp.Name = "tabHelp";
+            this.tabHelp.Size = new System.Drawing.Size(792, 446);
+            this.tabHelp.TabIndex = 2;
+            this.tabHelp.Text = "Help";
+            this.tabHelp.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Controls.Add(this.vv, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.btnPlay, 0, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 368F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(792, 446);
             this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // vv
+            // 
+            this.vv.BackColor = System.Drawing.Color.Black;
+            this.vv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vv.Location = new System.Drawing.Point(160, 3);
+            this.vv.MediaPlayer = null;
+            this.vv.Name = "vv";
+            this.vv.Size = new System.Drawing.Size(629, 362);
+            this.vv.TabIndex = 0;
+            this.vv.Text = "videoView1";
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Location = new System.Drawing.Point(3, 371);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnPlay.TabIndex = 1;
+            this.btnPlay.Text = "button1";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // dlgOF
             // 
@@ -1105,7 +1132,9 @@ namespace Attendance_Counter
             ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).EndInit();
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
-            this.tabSettings.ResumeLayout(false);
+            this.tabHelp.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.vv)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1136,7 +1165,7 @@ namespace Attendance_Counter
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.OpenFileDialog dlgOF;
         private System.Windows.Forms.SaveFileDialog dlgSF;
-        private System.Windows.Forms.TabPage tabSettings;
+        private System.Windows.Forms.TabPage tabHelp;
         private System.Windows.Forms.ListBox lstbxEmail;
         private System.Windows.Forms.Button btnLoadParticipantsList;
         private System.Windows.Forms.ListBox lstbxName;
@@ -1182,6 +1211,8 @@ namespace Attendance_Counter
         private System.Windows.Forms.TextBox txtATotal;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtVTotal;
+        private LibVLCSharp.WinForms.VideoView vv;
+        private System.Windows.Forms.Button btnPlay;
     }
 }
 

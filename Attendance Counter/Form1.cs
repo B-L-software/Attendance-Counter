@@ -24,6 +24,9 @@ namespace Attendance_Counter
             InitializeComponent();
             txtPL.Text = Properties.Settings.Default.PollLayout;
             numDP.Value = Properties.Settings.Default.DateIndex;
+            txtKHSFormat.Text = Properties.Settings.Default.KHSSettings;
+            txtDefaultFolder.Text = Properties.Settings.Default.DefaultStoragePath;
+            txtReportFolder.Text = Properties.Settings.Default.Folder;
 
         }
 
@@ -857,6 +860,7 @@ namespace Attendance_Counter
                     {
                         lstbxFolder.Items.Add(file.Name);
                     }
+                    btnReverseListOrder.PerformClick();
                 }
             } catch (Exception ex)
             {
@@ -1766,6 +1770,54 @@ namespace Attendance_Counter
             catch (Exception ex)
             {
                 MessageBox.Show("btnReverseListOrder_Click\n" + ex.Message);
+            }
+        }
+
+        private void txtKHSFormat_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtKHSFormat.Text)) { return; }
+
+                Properties.Settings.Default.KHSSettings = txtKHSFormat.Text;
+                Properties.Settings.Default.Save();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtKMSFormat_TextChanged\n" + ex.Message);
+            }
+        }
+
+        private void txtDefaultFolder_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                //if (string.IsNullOrWhiteSpace(txtDefaultFolder.Text)) { return; }
+
+                Properties.Settings.Default.DefaultStoragePath = txtDefaultFolder.Text;
+                Properties.Settings.Default.Save();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtDefaultFolder_TextChanged\n" + ex.Message);
+            }
+        }
+
+        private void txtReportFolder_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                //if (string.IsNullOrWhiteSpace(txtReportFolder.Text)) { return; }
+
+                Properties.Settings.Default.Folder = txtReportFolder.Text;
+                Properties.Settings.Default.Save();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtReportFolder_TextChanged\n" + ex.Message);
             }
         }
     }

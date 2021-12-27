@@ -101,6 +101,12 @@ namespace Attendance_Counter
             this.txtPL = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.numDP = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtKHSFormat = new System.Windows.Forms.TextBox();
+            this.txtDefaultFolder = new System.Windows.Forms.TextBox();
+            this.txtReportFolder = new System.Windows.Forms.TextBox();
             this.dlgOF = new System.Windows.Forms.OpenFileDialog();
             this.dlgSF = new System.Windows.Forms.SaveFileDialog();
             this.dlgSCSV = new System.Windows.Forms.SaveFileDialog();
@@ -1065,21 +1071,30 @@ namespace Attendance_Counter
             this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 646F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 650F));
             this.tableLayoutPanel6.Controls.Add(this.label15, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.txtPL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.label16, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.numDP, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.label17, 0, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label18, 0, 3);
+            this.tableLayoutPanel6.Controls.Add(this.label19, 0, 4);
+            this.tableLayoutPanel6.Controls.Add(this.txtKHSFormat, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.txtDefaultFolder, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.txtReportFolder, 1, 4);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 6;
+            this.tableLayoutPanel6.RowCount = 9;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 187F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(786, 440);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
@@ -1105,7 +1120,7 @@ namespace Attendance_Counter
             this.txtPL.Location = new System.Drawing.Point(153, 4);
             this.txtPL.Name = "txtPL";
             this.txtPL.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
-            this.txtPL.Size = new System.Drawing.Size(640, 23);
+            this.txtPL.Size = new System.Drawing.Size(644, 23);
             this.txtPL.TabIndex = 1;
             this.txtPL.TextChanged += new System.EventHandler(this.txtPL_TextChanged);
             // 
@@ -1117,7 +1132,7 @@ namespace Attendance_Counter
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(4, 29);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(142, 31);
+            this.label16.Size = new System.Drawing.Size(142, 27);
             this.label16.TabIndex = 2;
             this.label16.Text = "Date Position:";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1139,6 +1154,84 @@ namespace Attendance_Counter
             0,
             0});
             this.numDP.ValueChanged += new System.EventHandler(this.numDP_ValueChanged);
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(4, 57);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(142, 27);
+            this.label17.TabIndex = 4;
+            this.label17.Text = "KHS CSV Format:";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(4, 85);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(142, 27);
+            this.label18.TabIndex = 5;
+            this.label18.Text = "Default Folder:";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(4, 113);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(142, 27);
+            this.label19.TabIndex = 6;
+            this.label19.Text = "Report Folder:";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtKHSFormat
+            // 
+            this.txtKHSFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtKHSFormat.BackColor = System.Drawing.SystemColors.Info;
+            this.txtKHSFormat.Location = new System.Drawing.Point(153, 60);
+            this.txtKHSFormat.Name = "txtKHSFormat";
+            this.txtKHSFormat.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
+            this.txtKHSFormat.Size = new System.Drawing.Size(644, 23);
+            this.txtKHSFormat.TabIndex = 7;
+            this.txtKHSFormat.TextChanged += new System.EventHandler(this.txtKHSFormat_TextChanged);
+            // 
+            // txtDefaultFolder
+            // 
+            this.txtDefaultFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDefaultFolder.BackColor = System.Drawing.SystemColors.Info;
+            this.txtDefaultFolder.Location = new System.Drawing.Point(153, 88);
+            this.txtDefaultFolder.Name = "txtDefaultFolder";
+            this.txtDefaultFolder.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
+            this.txtDefaultFolder.Size = new System.Drawing.Size(644, 23);
+            this.txtDefaultFolder.TabIndex = 8;
+            this.txtDefaultFolder.TextChanged += new System.EventHandler(this.txtDefaultFolder_TextChanged);
+            // 
+            // txtReportFolder
+            // 
+            this.txtReportFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtReportFolder.BackColor = System.Drawing.SystemColors.Info;
+            this.txtReportFolder.Location = new System.Drawing.Point(153, 116);
+            this.txtReportFolder.Name = "txtReportFolder";
+            this.txtReportFolder.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
+            this.txtReportFolder.Size = new System.Drawing.Size(644, 23);
+            this.txtReportFolder.TabIndex = 9;
+            this.txtReportFolder.TextChanged += new System.EventHandler(this.txtReportFolder_TextChanged);
             // 
             // dlgOF
             // 
@@ -1280,6 +1373,12 @@ namespace Attendance_Counter
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.NumericUpDown numDP;
         private System.Windows.Forms.Button btnReverseListOrder;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtKHSFormat;
+        private System.Windows.Forms.TextBox txtDefaultFolder;
+        private System.Windows.Forms.TextBox txtReportFolder;
     }
 }
 

@@ -1494,7 +1494,7 @@ namespace Attendance_Counter
                 {
                     Properties.Settings.Default.Folder = System.IO.Path.GetDirectoryName(dlgSCSV.FileName);
                     Properties.Settings.Default.Save();
-                    txtDefaultFolder.Text = Properties.Settings.Default.Folder;
+                    txtReportFolder.Text = Properties.Settings.Default.Folder;
                     SaveToCSV(dgvReport, dlgSCSV.FileName);
                 }
                 
@@ -1594,6 +1594,7 @@ namespace Attendance_Counter
                     {
                         Properties.Settings.Default.Folder = dlgFB.SelectedPath;
                         Properties.Settings.Default.Save();
+                        txtReportFolder.Text = Properties.Settings.Default.Folder;
                         lstbxFolder.Items.Add(file.Name);
                     }
                 }

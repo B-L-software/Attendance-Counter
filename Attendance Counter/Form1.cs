@@ -1820,5 +1820,151 @@ namespace Attendance_Counter
                 MessageBox.Show("txtReportFolder_TextChanged\n" + ex.Message);
             }
         }
+
+        private void btnKHSImport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Create Vars to hold indexes for MemberName, Email, Group Overseer 
+                int MemName = -1;
+                int MemEmail = -1;
+                int GroupO = -1;
+                //Get Member Name, Email, Group Overseer index locations from KHS Format String
+                string[] KHSFrmt = txtKHSFormat.Text.ToLower().Split(",");
+                for (int i = 0; i < KHSFrmt.Length; i++)
+                {
+                    switch (KHSFrmt[i])
+                    {
+                        case "name":
+                            MemName = i;
+                            break;
+                        case "email":
+                            MemEmail = i;
+                            break;
+                        case "group_overseer":
+                            GroupO = i;
+                            break;
+
+                    }
+                }
+                
+                //check that indexes were found
+                if (MemName == -1 || MemEmail == -1 || GroupO == -1)
+                {
+                    //there was an error getting the indexes from the KHS Format String
+                    MessageBox.Show("Sorry!  There was an error in the KHS CSV Format String.  Please check that the string is correct and try again!  The following entries should exist: " +
+                        "name, email, group_overseer.");
+                    return;
+                }
+
+                //now load the KHS CSV File
+                dlgOF.DefaultExt = "csv";
+                dlgOF.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
+                string[] khs;
+                string[] khsCSV;
+                if (dlgOF.ShowDialog() == DialogResult.OK)
+                {
+                    khs = File.ReadAllText(dlgOF.FileName).Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    //skip the first line(0) and parse through line by line to get all the members
+                    for (int i = 1; i < khs.Length; i++)
+                    {
+                        try
+                        {
+                            // use quotes to find commas between them and remove only the commas between the quotes
+                            string kcsv = RemoveCommasInQuotes(khs[i], true);
+                            //remove quotes
+                            kcsv = kcsv.Replace("\"", "");
+
+                            khsCSV = kcsv.Split(","); //khsCSV will contain the name email and group name at the indexes determined above from the KHS CSV Format String
+
+                            //add member to the list
+                            bool memberadded = false;
+                            //determine if group exists and add to it otherwise make new group
+                            foreach (TreeNode nd in tvSG.Nodes)
+                            {
+                                if (nd.Text == khsCSV[GroupO].Trim() + " Group")
+                                {
+                                    //group exists so add it to this node
+                                    memberadded = true;
+                                    TreeNode nnd = nd.Nodes.Add("Member Name:" + khsCSV[MemName].Trim());
+                                    nnd.Nodes.Add("Emails:" + khsCSV[MemEmail].Trim());
+                                    nnd.Nodes.Add("Usernames:" + khsCSV[MemName].Trim());
+                                    nnd.Nodes.Add("DefaultCount:1");
+                                }
+
+                            }
+                            if (!memberadded)
+                            {
+                                //Group didnt exist so create it and add member
+                                TreeNode nd = tvSG.Nodes.Add(khsCSV[GroupO].Trim() + " Group");
+                                TreeNode nnd = nd.Nodes.Add("Member Name:" + khsCSV[MemName].Trim());
+                                nnd.Nodes.Add("Emails:" + khsCSV[MemEmail].Trim());
+                                nnd.Nodes.Add("Usernames:" + khsCSV[MemName].Trim());
+                                nnd.Nodes.Add("DefaultCount:1");
+                            }
+
+
+                        }
+                        catch { } //do nothing if caught just continue to next index
+                    }
+
+                    //add generic groups at the end
+                    tvSG.Nodes.Add("Bible Studies");
+                    tvSG.Nodes.Add("Seasonal Publishers");
+                    tvSG.Nodes.Add("Disfellowshipped");
+                    tvSG.Nodes.Add("Occasional Attendee");
+                    tvSG.Nodes.Add("Regular Attendee");
+
+                    //save tree
+                    SaveTree(tvSG, cfgPath);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnKHSImport_Click\n" + ex.Message);
+            }
+        }
+        
+        private string RemoveCommasInQuotes(string stringtoparse, bool reverse)
+        {
+            try
+            {
+                //remove all commas between quotes recursively (only works with a single comma between two values)
+                //so the following input ("Last, First", "1, 2") will have the following outputs:
+                //if reverse is true: ("First Last", "2 1")
+                //if reverse if false: ("Last First", "1 2")
+                int indx = 0; 
+                string temp1;
+                string[] temp2;
+                              
+                while (indx > -1) 
+                {
+                    
+                    temp1 = SearchbyParams(ref stringtoparse, ref indx, "\"", "\"");
+                    temp2 = temp1.Split(",");
+
+                    if (temp2.Length > 1) //there was a comma between the quotes
+                    {
+                        if (reverse) //reverse what comes before and after the comma such as "Lavins, Brad" to "Brad Lavins" no comma
+                        {
+                            stringtoparse = stringtoparse.Replace(temp1, temp2[1].Trim() + " " + temp2[0].Trim());
+                        }
+                        else // just remove the comma
+                        {
+                            stringtoparse = stringtoparse.Replace(temp1, temp2[0].Trim() + " " + temp2[1].Trim());
+                        }
+                    }
+                    
+                }
+
+                return stringtoparse;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("RemoveCommasInQuotes\n" + ex.Message);
+                return stringtoparse;
+            }
+        }
     }
 }

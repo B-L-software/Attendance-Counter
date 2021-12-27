@@ -58,6 +58,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
+            this.btnKHSImport = new System.Windows.Forms.Button();
             this.txtHost = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtDefaultCount = new System.Windows.Forms.TextBox();
@@ -514,10 +515,13 @@ namespace Attendance_Counter
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Controls.Add(this.btnImport, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnExport, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.txtHost, 0, 2);
+            this.tableLayoutPanel5.Controls.Add(this.btnKHSImport, 0, 2);
+            this.tableLayoutPanel5.Controls.Add(this.txtHost, 0, 3);
             this.tableLayoutPanel5.Location = new System.Drawing.Point(4, 174);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 4;
+            this.tableLayoutPanel5.RowCount = 6;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
@@ -551,12 +555,25 @@ namespace Attendance_Counter
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
+            // btnKHSImport
+            // 
+            this.btnKHSImport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnKHSImport.Location = new System.Drawing.Point(3, 65);
+            this.btnKHSImport.Name = "btnKHSImport";
+            this.btnKHSImport.Size = new System.Drawing.Size(124, 25);
+            this.btnKHSImport.TabIndex = 3;
+            this.btnKHSImport.Text = "KHS Import";
+            this.btnKHSImport.UseVisualStyleBackColor = true;
+            this.btnKHSImport.Click += new System.EventHandler(this.btnKHSImport_Click);
+            // 
             // txtHost
             // 
             this.txtHost.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHost.Location = new System.Drawing.Point(3, 65);
+            this.txtHost.Location = new System.Drawing.Point(3, 96);
             this.txtHost.Name = "txtHost";
             this.txtHost.PlaceholderText = "Host Name (John Doe)";
             this.txtHost.Size = new System.Drawing.Size(124, 23);
@@ -1071,7 +1088,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 650F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 655F));
             this.tableLayoutPanel6.Controls.Add(this.label15, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.txtPL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.label16, 0, 1);
@@ -1120,7 +1137,7 @@ namespace Attendance_Counter
             this.txtPL.Location = new System.Drawing.Point(153, 4);
             this.txtPL.Name = "txtPL";
             this.txtPL.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
-            this.txtPL.Size = new System.Drawing.Size(644, 23);
+            this.txtPL.Size = new System.Drawing.Size(649, 23);
             this.txtPL.TabIndex = 1;
             this.txtPL.TextChanged += new System.EventHandler(this.txtPL_TextChanged);
             // 
@@ -1202,8 +1219,8 @@ namespace Attendance_Counter
             this.txtKHSFormat.BackColor = System.Drawing.SystemColors.Info;
             this.txtKHSFormat.Location = new System.Drawing.Point(153, 60);
             this.txtKHSFormat.Name = "txtKHSFormat";
-            this.txtKHSFormat.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
-            this.txtKHSFormat.Size = new System.Drawing.Size(644, 23);
+            this.txtKHSFormat.PlaceholderText = resources.GetString("txtKHSFormat.PlaceholderText");
+            this.txtKHSFormat.Size = new System.Drawing.Size(649, 23);
             this.txtKHSFormat.TabIndex = 7;
             this.txtKHSFormat.TextChanged += new System.EventHandler(this.txtKHSFormat_TextChanged);
             // 
@@ -1215,8 +1232,8 @@ namespace Attendance_Counter
             this.txtDefaultFolder.BackColor = System.Drawing.SystemColors.Info;
             this.txtDefaultFolder.Location = new System.Drawing.Point(153, 88);
             this.txtDefaultFolder.Name = "txtDefaultFolder";
-            this.txtDefaultFolder.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
-            this.txtDefaultFolder.Size = new System.Drawing.Size(644, 23);
+            this.txtDefaultFolder.PlaceholderText = "C:\\User\\Downloads";
+            this.txtDefaultFolder.Size = new System.Drawing.Size(649, 23);
             this.txtDefaultFolder.TabIndex = 8;
             this.txtDefaultFolder.TextChanged += new System.EventHandler(this.txtDefaultFolder_TextChanged);
             // 
@@ -1228,8 +1245,8 @@ namespace Attendance_Counter
             this.txtReportFolder.BackColor = System.Drawing.SystemColors.Info;
             this.txtReportFolder.Location = new System.Drawing.Point(153, 116);
             this.txtReportFolder.Name = "txtReportFolder";
-            this.txtReportFolder.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
-            this.txtReportFolder.Size = new System.Drawing.Size(644, 23);
+            this.txtReportFolder.PlaceholderText = "C:\\User\\Documents\\Attendance Reports";
+            this.txtReportFolder.Size = new System.Drawing.Size(649, 23);
             this.txtReportFolder.TabIndex = 9;
             this.txtReportFolder.TextChanged += new System.EventHandler(this.txtReportFolder_TextChanged);
             // 
@@ -1379,6 +1396,7 @@ namespace Attendance_Counter
         private System.Windows.Forms.TextBox txtKHSFormat;
         private System.Windows.Forms.TextBox txtDefaultFolder;
         private System.Windows.Forms.TextBox txtReportFolder;
+        private System.Windows.Forms.Button btnKHSImport;
     }
 }
 

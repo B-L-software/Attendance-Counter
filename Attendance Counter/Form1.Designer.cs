@@ -1088,7 +1088,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 655F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 656F));
             this.tableLayoutPanel6.Controls.Add(this.label15, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.txtPL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.label16, 0, 1);
@@ -1137,7 +1137,7 @@ namespace Attendance_Counter
             this.txtPL.Location = new System.Drawing.Point(153, 4);
             this.txtPL.Name = "txtPL";
             this.txtPL.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
-            this.txtPL.Size = new System.Drawing.Size(649, 23);
+            this.txtPL.Size = new System.Drawing.Size(650, 23);
             this.txtPL.TabIndex = 1;
             this.txtPL.TextChanged += new System.EventHandler(this.txtPL_TextChanged);
             // 
@@ -1220,7 +1220,7 @@ namespace Attendance_Counter
             this.txtKHSFormat.Location = new System.Drawing.Point(153, 60);
             this.txtKHSFormat.Name = "txtKHSFormat";
             this.txtKHSFormat.PlaceholderText = resources.GetString("txtKHSFormat.PlaceholderText");
-            this.txtKHSFormat.Size = new System.Drawing.Size(649, 23);
+            this.txtKHSFormat.Size = new System.Drawing.Size(650, 23);
             this.txtKHSFormat.TabIndex = 7;
             this.txtKHSFormat.TextChanged += new System.EventHandler(this.txtKHSFormat_TextChanged);
             // 
@@ -1233,7 +1233,7 @@ namespace Attendance_Counter
             this.txtDefaultFolder.Location = new System.Drawing.Point(153, 88);
             this.txtDefaultFolder.Name = "txtDefaultFolder";
             this.txtDefaultFolder.PlaceholderText = "C:\\User\\Downloads";
-            this.txtDefaultFolder.Size = new System.Drawing.Size(649, 23);
+            this.txtDefaultFolder.Size = new System.Drawing.Size(650, 23);
             this.txtDefaultFolder.TabIndex = 8;
             this.txtDefaultFolder.TextChanged += new System.EventHandler(this.txtDefaultFolder_TextChanged);
             // 
@@ -1246,7 +1246,7 @@ namespace Attendance_Counter
             this.txtReportFolder.Location = new System.Drawing.Point(153, 116);
             this.txtReportFolder.Name = "txtReportFolder";
             this.txtReportFolder.PlaceholderText = "C:\\User\\Documents\\Attendance Reports";
-            this.txtReportFolder.Size = new System.Drawing.Size(649, 23);
+            this.txtReportFolder.Size = new System.Drawing.Size(650, 23);
             this.txtReportFolder.TabIndex = 9;
             this.txtReportFolder.TextChanged += new System.EventHandler(this.txtReportFolder_TextChanged);
             // 

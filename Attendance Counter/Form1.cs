@@ -505,6 +505,7 @@ namespace Attendance_Counter
                 {
                     Properties.Settings.Default.DefaultStoragePath = System.IO.Path.GetDirectoryName(dlgOF.FileName);
                     Properties.Settings.Default.Save();
+                    txtDefaultFolder.Text = Properties.Settings.Default.DefaultStoragePath;
                     lstbxEmail.Items.Clear();
                     lstbxName.Items.Clear(); 
                     absentees.Clear();
@@ -706,6 +707,7 @@ namespace Attendance_Counter
                 {
                     Properties.Settings.Default.DefaultStoragePath = System.IO.Path.GetDirectoryName(dlgOF.FileName);
                     Properties.Settings.Default.Save();
+                    txtDefaultFolder.Text = Properties.Settings.Default.DefaultStoragePath;
                     txtPollDate.Text = "Poll Loaded";
                     poll = File.ReadAllText(dlgOF.FileName);
 
@@ -1491,6 +1493,8 @@ namespace Attendance_Counter
                 if (dlgSCSV.ShowDialog() == DialogResult.OK)
                 {
                     Properties.Settings.Default.Folder = System.IO.Path.GetDirectoryName(dlgSCSV.FileName);
+                    Properties.Settings.Default.Save();
+                    txtDefaultFolder.Text = Properties.Settings.Default.Folder;
                     SaveToCSV(dgvReport, dlgSCSV.FileName);
                 }
                 

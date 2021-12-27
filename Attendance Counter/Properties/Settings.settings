@@ -29,5 +29,14 @@
     <Setting Name="Folder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="PollLayout" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count</Value>
+    </Setting>
+    <Setting Name="DateIndex" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="KHSSettings" Type="System.String" Scope="User">
+      <Value Profile="(Default)">name,gender,address,home_phone,mobile_phone,work_phone,email,elder,ministerial_servant,years_appointed,age,years_baptized,unbaptized_publisher,pioneer,aux_pioneer,special_pioneer,missionary,deaf,blind,infirm,group_overseer</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

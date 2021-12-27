@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,7 +22,9 @@ namespace Attendance_Counter
         public Form1()
         {
             InitializeComponent();
-            
+            txtPL.Text = Properties.Settings.Default.PollLayout;
+            numDP.Value = Properties.Settings.Default.DateIndex;
+
         }
 
         //vars for app
@@ -39,6 +42,10 @@ namespace Attendance_Counter
         bool moveServiceGroup = false;
         TreeNode tnMoveServiceGroup;
         TreeNode tnMoveSGParent;
+        //make vars for each layout element
+        int un = 0; // default 1
+        int ue = 0; // default 2
+        int pr = 0; // default 5
 
 
         //stucts
@@ -485,10 +492,16 @@ namespace Attendance_Counter
         {
             try
             {
+                if (!string.IsNullOrEmpty(Properties.Settings.Default.DefaultStoragePath))
+                {
+                    dlgOF.InitialDirectory = Properties.Settings.Default.DefaultStoragePath;
+                }
                 dlgOF.DefaultExt = "csv";
                 dlgOF.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
                 if (dlgOF.ShowDialog() == DialogResult.OK)
                 {
+                    Properties.Settings.Default.DefaultStoragePath = System.IO.Path.GetDirectoryName(dlgOF.FileName);
+                    Properties.Settings.Default.Save();
                     lstbxEmail.Items.Clear();
                     lstbxName.Items.Clear(); 
                     absentees.Clear();
@@ -682,8 +695,14 @@ namespace Attendance_Counter
                 txtPollDate.Text = "Poll not loaded!";
                 dlgOF.DefaultExt = "csv";
                 dlgOF.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
+                if (!string.IsNullOrEmpty(Properties.Settings.Default.DefaultStoragePath))
+                {
+                    dlgOF.InitialDirectory = Properties.Settings.Default.DefaultStoragePath;
+                }
                 if (dlgOF.ShowDialog() == DialogResult.OK)
                 {
+                    Properties.Settings.Default.DefaultStoragePath = System.IO.Path.GetDirectoryName(dlgOF.FileName);
+                    Properties.Settings.Default.Save();
                     txtPollDate.Text = "Poll Loaded";
                     poll = File.ReadAllText(dlgOF.FileName);
 
@@ -701,9 +720,26 @@ namespace Attendance_Counter
             try
             {
                 pollTakers.Clear();
+            //get poll layout and determine locations of elements
+                string[] polay = txtPL.Text.Split(",");
+                for (int i = 0; i < polay.Length; i++)
+                {
+                    switch (polay[i])
+                    {
+                        case "User_Name":
+                            un = i;
+                            break;
+                        case "User_Email":
+                            ue = i;
+                            break;
+                        case "Poll_Count":
+                            pr = i;
+                            break;
+                }
+                }
 
-                //read line by line
-                string dt = "";
+            //read line by line
+            string dt = "";
                 string[] spltPoll = poll.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                 foreach (string line in spltPoll)
                 {
@@ -712,18 +748,19 @@ namespace Attendance_Counter
 
                     PollTaker p = new PollTaker();
 
+                   
                     switch (csv.Length)
                     {
                         case 4:
                             if (csv[0].IndexOf(Properties.Settings.Default.PollDateFinder) > -1)
                             {
-                                dt = csv[2];
+                                dt = csv[Decimal.ToInt32(numDP.Value)];
                             }
                             break;
-                        case int n when n >= 6:
-                            p.Username = csv[1];
-                            p.Email = csv[2];
-                            p.PollResult = csv[6];
+                        case int n when n >= polay.Length: //should be 6, updated to make it more dynamic so if zoom changes how they report it will be easy to update in settings
+                            p.Username = csv[un];
+                            p.Email = csv[ue];
+                            p.PollResult = csv[pr];
 
                             //add p to the polltakers hashset
                             pollTakers.Add(p);
@@ -735,7 +772,7 @@ namespace Attendance_Counter
 
                 //add date
                 txtPollDate.Text = DateTime.Parse(dt).ToString("MM/dd/yyyy");
-            
+
             }
             catch (Exception ex)
             {
@@ -808,15 +845,22 @@ namespace Attendance_Counter
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedTab.Text == "Viewer" && !string.IsNullOrEmpty(Properties.Settings.Default.Folder))
+            try
             {
-                lstbxFolder.Items.Clear();
-                DirectoryInfo dinfo = new DirectoryInfo(Properties.Settings.Default.Folder);
-                FileInfo[] Files = dinfo.GetFiles("*.csv");
-                foreach (FileInfo file in Files)
+
+                if (tabControl1.SelectedTab.Text == "Viewer" && !string.IsNullOrEmpty(Properties.Settings.Default.Folder))
                 {
-                    lstbxFolder.Items.Add(file.Name);
+                    lstbxFolder.Items.Clear();
+                    DirectoryInfo dinfo = new DirectoryInfo(Properties.Settings.Default.Folder);
+                    FileInfo[] Files = dinfo.GetFiles("*.csv");
+                    foreach (FileInfo file in Files)
+                    {
+                        lstbxFolder.Items.Add(file.Name);
+                    }
                 }
+            } catch (Exception ex)
+            {
+                MessageBox.Show("tabControl1_SelectedIndexChanged\n" + ex.Message);
             }
 
         }
@@ -866,8 +910,8 @@ namespace Attendance_Counter
 
         private void btnCompare_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 //clear all vars
                 dgvReport.DataSource = null;
                 dgvReport.Refresh();
@@ -882,10 +926,12 @@ namespace Attendance_Counter
                 {
                     poll += Environment.NewLine;
                 }
-                //#,User Name,User Email,Submitted Date/Time,poll message, poll
-                poll += "0, Host, , , , ,1" + Environment.NewLine;
+                //#,User Name,User Email,Submitted Date/Time,poll
+                //poll += "0, Host, , , ,1" + Environment.NewLine;
+                poll += txtPL.Text.Replace("User_Name", "Host").Replace("User_Email", " ").Replace("Date/Time", " ").Replace("Poll_Message", " ").Replace("Poll_Count", "1") + Environment.NewLine;
 
-                ParseServiceGroups();
+
+            ParseServiceGroups();
                 LoadPoll();
                 
 
@@ -985,11 +1031,11 @@ namespace Attendance_Counter
                 txtAttendance.Text = attnd.ToString();
                 txtNonPolledTotal.Text = nonpoll.ToString();
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("btnCompare_Click\n" + ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("btnCompare_Click\n" + ex.Message);
+            //}
         }
 
         private void AddPollTakers()
@@ -1341,7 +1387,8 @@ namespace Attendance_Counter
                     poll += Environment.NewLine;
                 }
                 //#,User Name,User Email,Submitted Date/Time,poll message, poll
-                poll += "0,!!KHConf BELOW!!, , , , , VVVV" + Environment.NewLine;
+                //poll += "0,!!KHConf BELOW!!, , , ,VVVV" + Environment.NewLine;
+                poll += txtPL.Text.Replace("User_Name", "!!KHConf BELOW!!").Replace("User_Email", " ").Replace("Date/Time", " ").Replace("Poll_Message"," ").Replace("Poll_Count", "VVVV") + Environment.NewLine;
 
 
 
@@ -1411,7 +1458,8 @@ namespace Attendance_Counter
                                 poll += Environment.NewLine;
                             }
                             //#,User Name,User Email,Submitted Date/Time,poll message, poll
-                            poll += "0," + name + ", e, d, m, " + ", " + count + Environment.NewLine;                            
+                            //poll += "0," + name + ", e, d, " + ", " + count + Environment.NewLine;
+                            poll += txtPL.Text.Replace("User_Name", name).Replace("Poll_Count", count) + Environment.NewLine;
                         }
                         i = 0;
                         count = "";
@@ -1430,10 +1478,15 @@ namespace Attendance_Counter
         private void btnSaveCSV_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
+                if (!string.IsNullOrEmpty(Properties.Settings.Default.Folder))
+                {
+                    dlgSCSV.InitialDirectory = Properties.Settings.Default.Folder;
+                }
                 dlgSCSV.FileName = reportfn;
                 if (dlgSCSV.ShowDialog() == DialogResult.OK)
                 {
+                    Properties.Settings.Default.Folder = System.IO.Path.GetDirectoryName(dlgSCSV.FileName);
                     SaveToCSV(dgvReport, dlgSCSV.FileName);
                 }
                 
@@ -1658,6 +1711,61 @@ namespace Attendance_Counter
             catch (Exception ex)
             {
                 MessageBox.Show("btnPlay_Click\n" + ex.Message);
+            }
+        }
+
+        private void txtPL_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtPL.Text)) { return; }
+
+                Properties.Settings.Default.PollLayout = txtPL.Text;
+                Properties.Settings.Default.Save();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtPL_TextChanged\n" + ex.Message);
+            }
+        }
+
+        private void numDP_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Properties.Settings.Default.DateIndex = numDP.Value;
+                Properties.Settings.Default.Save();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("txtPL_TextChanged\n" + ex.Message);
+            }
+        }
+
+        private void btnReverseListOrder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ArrayList list = new ArrayList();
+
+                foreach (object o in lstbxFolder.Items)
+                {
+                    list.Add(o);
+                }
+                //list.Sort();
+                list.Reverse();
+                lstbxFolder.Items.Clear();
+                foreach (object o in list)
+                {
+                    lstbxFolder.Items.Add(o);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnReverseListOrder_Click\n" + ex.Message);
             }
         }
     }

@@ -131,5 +131,43 @@ namespace Attendance_Counter.Properties {
                 this["Folder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count")]
+        public string PollLayout {
+            get {
+                return ((string)(this["PollLayout"]));
+            }
+            set {
+                this["PollLayout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public decimal DateIndex {
+            get {
+                return ((decimal)(this["DateIndex"]));
+            }
+            set {
+                this["DateIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("name,gender,address,home_phone,mobile_phone,work_phone,email,elder,ministerial_se" +
+            "rvant,years_appointed,age,years_baptized,unbaptized_publisher,pioneer,aux_pionee" +
+            "r,special_pioneer,missionary,deaf,blind,infirm,group_overseer")]
+        public string KHSSettings {
+            get {
+                return ((string)(this["KHSSettings"]));
+            }
+            set {
+                this["KHSSettings"] = value;
+            }
+        }
     }
 }

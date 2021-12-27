@@ -85,6 +85,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
             this.lstbxFolder = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.btnReverseListOrder = new System.Windows.Forms.Button();
             this.dgViewer = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSelectFolder = new System.Windows.Forms.Button();
@@ -94,10 +95,12 @@ namespace Attendance_Counter
             this.txtVNonPolled = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txtVTotal = new System.Windows.Forms.TextBox();
-            this.tabHelp = new System.Windows.Forms.TabPage();
+            this.tabSettings = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.vv = new LibVLCSharp.WinForms.VideoView();
-            this.btnPlay = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtPL = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.numDP = new System.Windows.Forms.NumericUpDown();
             this.dlgOF = new System.Windows.Forms.OpenFileDialog();
             this.dlgSF = new System.Windows.Forms.SaveFileDialog();
             this.dlgSCSV = new System.Windows.Forms.SaveFileDialog();
@@ -120,9 +123,9 @@ namespace Attendance_Counter
             this.tableLayoutPanel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).BeginInit();
             this.tableLayoutPanel12.SuspendLayout();
-            this.tabHelp.SuspendLayout();
+            this.tabSettings.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.vv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDP)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -130,7 +133,7 @@ namespace Attendance_Counter
             this.tabControl1.Controls.Add(this.tabSG);
             this.tabControl1.Controls.Add(this.tabAttendance);
             this.tabControl1.Controls.Add(this.tabViewer);
-            this.tabControl1.Controls.Add(this.tabHelp);
+            this.tabControl1.Controls.Add(this.tabSettings);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -491,6 +494,7 @@ namespace Attendance_Counter
             this.txtKH.Location = new System.Drawing.Point(5, 172);
             this.txtKH.Multiline = true;
             this.txtKH.Name = "txtKH";
+            this.txtKH.PlaceholderText = "Paste KHConf Data Here!";
             this.txtKH.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtKH.Size = new System.Drawing.Size(125, 79);
             this.txtKH.TabIndex = 10;
@@ -870,12 +874,14 @@ namespace Attendance_Counter
             this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel13.Controls.Add(this.lstbxFolder, 0, 1);
             this.tableLayoutPanel13.Controls.Add(this.label10, 0, 0);
+            this.tableLayoutPanel13.Controls.Add(this.btnReverseListOrder, 0, 2);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel13.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
-            this.tableLayoutPanel13.RowCount = 2;
+            this.tableLayoutPanel13.RowCount = 3;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel13.Size = new System.Drawing.Size(179, 394);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
@@ -886,7 +892,7 @@ namespace Attendance_Counter
             this.lstbxFolder.ItemHeight = 15;
             this.lstbxFolder.Location = new System.Drawing.Point(3, 33);
             this.lstbxFolder.Name = "lstbxFolder";
-            this.lstbxFolder.Size = new System.Drawing.Size(173, 358);
+            this.lstbxFolder.Size = new System.Drawing.Size(173, 328);
             this.lstbxFolder.TabIndex = 0;
             this.lstbxFolder.SelectedIndexChanged += new System.EventHandler(this.lstbxFolder_SelectedIndexChanged);
             // 
@@ -903,6 +909,19 @@ namespace Attendance_Counter
             this.label10.TabIndex = 1;
             this.label10.Text = "Click on File to Load:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnReverseListOrder
+            // 
+            this.btnReverseListOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReverseListOrder.Location = new System.Drawing.Point(3, 367);
+            this.btnReverseListOrder.Name = "btnReverseListOrder";
+            this.btnReverseListOrder.Size = new System.Drawing.Size(173, 24);
+            this.btnReverseListOrder.TabIndex = 2;
+            this.btnReverseListOrder.Text = "Reverse Order";
+            this.btnReverseListOrder.UseVisualStyleBackColor = true;
+            this.btnReverseListOrder.Click += new System.EventHandler(this.btnReverseListOrder_Click);
             // 
             // dgViewer
             // 
@@ -1030,52 +1049,96 @@ namespace Attendance_Counter
             this.txtVTotal.Size = new System.Drawing.Size(50, 23);
             this.txtVTotal.TabIndex = 8;
             // 
-            // tabHelp
+            // tabSettings
             // 
-            this.tabHelp.Controls.Add(this.tableLayoutPanel6);
-            this.tabHelp.Location = new System.Drawing.Point(4, 24);
-            this.tabHelp.Name = "tabHelp";
-            this.tabHelp.Size = new System.Drawing.Size(792, 446);
-            this.tabHelp.TabIndex = 2;
-            this.tabHelp.Text = "Help";
-            this.tabHelp.UseVisualStyleBackColor = true;
+            this.tabSettings.Controls.Add(this.tableLayoutPanel6);
+            this.tabSettings.Location = new System.Drawing.Point(4, 24);
+            this.tabSettings.Name = "tabSettings";
+            this.tabSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSettings.Size = new System.Drawing.Size(792, 446);
+            this.tabSettings.TabIndex = 4;
+            this.tabSettings.Text = "Settings";
+            this.tabSettings.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel6
             // 
+            this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Controls.Add(this.vv, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.btnPlay, 0, 1);
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 646F));
+            this.tableLayoutPanel6.Controls.Add(this.label15, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.txtPL, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label16, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.numDP, 1, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 2;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 368F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(792, 446);
+            this.tableLayoutPanel6.RowCount = 6;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 187F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(786, 440);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
-            // vv
+            // label15
             // 
-            this.vv.BackColor = System.Drawing.Color.Black;
-            this.vv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vv.Location = new System.Drawing.Point(160, 3);
-            this.vv.MediaPlayer = null;
-            this.vv.Name = "vv";
-            this.vv.Size = new System.Drawing.Size(629, 362);
-            this.vv.TabIndex = 0;
-            this.vv.Text = "videoView1";
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(4, 1);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(142, 27);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Poll Layout Description:";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnPlay
+            // txtPL
             // 
-            this.btnPlay.Location = new System.Drawing.Point(3, 371);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(75, 23);
-            this.btnPlay.TabIndex = 1;
-            this.btnPlay.Text = "button1";
-            this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            this.txtPL.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPL.BackColor = System.Drawing.SystemColors.Info;
+            this.txtPL.Location = new System.Drawing.Point(153, 4);
+            this.txtPL.Name = "txtPL";
+            this.txtPL.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
+            this.txtPL.Size = new System.Drawing.Size(640, 23);
+            this.txtPL.TabIndex = 1;
+            this.txtPL.TextChanged += new System.EventHandler(this.txtPL_TextChanged);
+            // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(4, 29);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(142, 31);
+            this.label16.TabIndex = 2;
+            this.label16.Text = "Date Position:";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // numDP
+            // 
+            this.numDP.Location = new System.Drawing.Point(153, 32);
+            this.numDP.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numDP.Name = "numDP";
+            this.numDP.Size = new System.Drawing.Size(48, 23);
+            this.numDP.TabIndex = 3;
+            this.numDP.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numDP.ValueChanged += new System.EventHandler(this.numDP_ValueChanged);
             // 
             // dlgOF
             // 
@@ -1132,9 +1195,10 @@ namespace Attendance_Counter
             ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).EndInit();
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
-            this.tabHelp.ResumeLayout(false);
+            this.tabSettings.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.vv)).EndInit();
+            this.tableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDP)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1165,7 +1229,6 @@ namespace Attendance_Counter
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.OpenFileDialog dlgOF;
         private System.Windows.Forms.SaveFileDialog dlgSF;
-        private System.Windows.Forms.TabPage tabHelp;
         private System.Windows.Forms.ListBox lstbxEmail;
         private System.Windows.Forms.Button btnLoadParticipantsList;
         private System.Windows.Forms.ListBox lstbxName;
@@ -1176,7 +1239,6 @@ namespace Attendance_Counter
         private System.Windows.Forms.TextBox txtPollDate;
         private System.Windows.Forms.TextBox txtKH;
         private System.Windows.Forms.TextBox txtHost;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.DataGridView dgvReport;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Button btnSaveCSV;
@@ -1211,8 +1273,13 @@ namespace Attendance_Counter
         private System.Windows.Forms.TextBox txtATotal;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtVTotal;
-        private LibVLCSharp.WinForms.VideoView vv;
-        private System.Windows.Forms.Button btnPlay;
+        private System.Windows.Forms.TabPage tabSettings;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txtPL;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown numDP;
+        private System.Windows.Forms.Button btnReverseListOrder;
     }
 }
 

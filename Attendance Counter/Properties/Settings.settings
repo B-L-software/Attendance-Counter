@@ -38,7 +38,10 @@
     <Setting Name="KHSSettings" Type="System.String" Scope="User">
       <Value Profile="(Default)">name,gender,address,home_phone,mobile_phone,work_phone,email,elder,ministerial_servant,years_appointed,age,years_baptized,unbaptized_publisher,pioneer,aux_pioneer,special_pioneer,missionary,deaf,blind,infirm,group_overseer</Value>
     </Setting>
-    <Setting Name="Setting" Type="System.String" Scope="User">
+    <Setting Name="BreakoutFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="BreakoutRooms" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

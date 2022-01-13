@@ -40,6 +40,7 @@ namespace Attendance_Counter
         List<report> reports = new List<report>();
         List<string> nonpollers = new List<string>();
         string reportfn =  DateTime.Today.ToString("MM-dd-yyyy") + "_Report.csv";
+        string breakoutfn = DateTime.Today.ToString("MM-dd-yyyy") + "_BreakoutRooms.csv";
         string guestName = "";
         string guestEmail = "";
         bool moveServiceGroup = false;
@@ -49,9 +50,33 @@ namespace Attendance_Counter
         int un = 0; // default 1
         int ue = 0; // default 2
         int pr = 0; // default 5
+        bool blnExcludeListDirty = false;
+        int breakoutLastIndex = -1;
+        bool blnReturnToLastIndex = false;
+
+        // Instantiate random number generator.  
+        private readonly Random _random = new Random();
+
 
 
         //stucts
+        public struct Breakouts
+        {
+            public string Room;
+            public string MemberName;
+            public string Email;
+            public string Exclusion;
+
+            public Breakouts(string room, string membername, string email, string exclusion)
+            {
+                Room = room;
+                MemberName = membername;
+                Email = email;
+                Exclusion = exclusion;
+            }
+        }
+        
+
         public struct PollTaker
         {
             public string GroupName;
@@ -135,7 +160,28 @@ namespace Attendance_Counter
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadServiceGroups();
-            
+            LoadBreakoutRooms();
+
+        }
+
+        private void LoadBreakoutRooms()
+        {
+            try
+            {
+                lstbxBreakoutRooms.Items.Clear();
+                string[] borms = Properties.Settings.Default.BreakoutRooms.Trim().Split("|~|");
+                foreach (string bo in borms)
+                {
+                    if (!string.IsNullOrEmpty(bo))
+                    {
+                        lstbxBreakoutRooms.Items.Add(bo);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("LoadBreakoutRooms\n" + ex.Message);
+            }
         }
 
         private void LoadServiceGroups()
@@ -871,7 +917,7 @@ namespace Attendance_Counter
 
         }
 
-        private void SaveToCSV(DataGridView DGV, string filename)
+        private void SaveToCSV(DataGridView DGV, string filename, int columnCount = 0)
         {
             string dlmtr = Properties.Settings.Default.CSVDelimiter;
             string drepl = Properties.Settings.Default.DelimterReplacement;
@@ -887,12 +933,14 @@ namespace Attendance_Counter
                     MessageBox.Show("It wasn't possible to write the data to the disk." + ex.Message);
                 }
             }
-            int columnCount = DGV.ColumnCount;
+            if (columnCount == 0) { columnCount = DGV.ColumnCount; }
             string columnNames = "";
             string[] output = new string[DGV.RowCount + 1];
+            string dl = dlmtr;
             for (int i = 0; i < columnCount; i++)
             {
-                columnNames += DGV.Columns[i].Name.ToString().Replace("_", " ") + Properties.Settings.Default.CSVDelimiter;
+                if (i == columnCount -1) { dl = ""; }
+                columnNames += DGV.Columns[i].Name.ToString().Replace("_", " ").Replace("Preassign", "Pre-assign") + dl;
             }
             output[0] += columnNames;
             for (int i = 1; (i - 1) < DGV.RowCount; i++)
@@ -908,6 +956,11 @@ namespace Attendance_Counter
 
                         output[i] += DGV.Rows[i - 1].Cells[j].Value.ToString().Replace(dlmtr, drepl) + dlmtr;
                     }
+                   
+                }
+                if (output[i].EndsWith(dlmtr))
+                {
+                    output[i] = output[i].Substring(0, output[i].Length - dlmtr.Length);
                 }
             }
             System.IO.File.WriteAllLines(filename, output, System.Text.Encoding.UTF8);
@@ -1971,5 +2024,570 @@ namespace Attendance_Counter
                 return stringtoparse;
             }
         }
+
+        private void tabBreakoutRooms_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                chklstAutoAssign.Items.Clear();
+                chklstExclude.Items.Clear();
+                blnExcludeListDirty = false;
+                //load both checked list boxes from tvsg from 1st child node from root
+                foreach (TreeNode root in tvSG.Nodes)
+                {
+                    foreach (TreeNode membername in root.Nodes)
+                    {
+                        chklstAutoAssign.Items.Add(membername.Text.Replace("Member Name:", ""));
+                        chklstAutoAssign.SetItemChecked(chklstAutoAssign.Items.Count - 1, true);
+                        
+                    }
+                }
+                if (chklstAutoAssign.Items.Count > 0) { chklstAutoAssign.SelectedIndex = 0; } //select the first member in the list
+                breakoutLastIndex = chklstAutoAssign.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("tabBreakoutRooms_Enter\n" + ex.Message);
+
+            }
+        }
+
+        private void chklstAutoAssign_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            { 
+                if(blnReturnToLastIndex) { return; }//dont fire event if this is true just return to the last index
+
+                if (blnExcludeListDirty)
+                {
+                    string msg = "You have unsaved data, are you sure you want to leave?";
+                    if (MessageBox.Show(msg,"Unsaved Data!", MessageBoxButtons.YesNo) == DialogResult.No && breakoutLastIndex > -1)
+                    {
+                        //return to the last index
+                        if (chklstAutoAssign.Items.Count > breakoutLastIndex)
+                        {
+                            blnReturnToLastIndex = true;
+                            chklstAutoAssign.SelectedIndex = breakoutLastIndex;
+                            blnReturnToLastIndex = false;
+                            return;
+                        }
+
+                    }
+                    else
+                    {
+                        blnExcludeListDirty = false;
+                    }
+                    
+                }
+
+                if (chklstAutoAssign.SelectedIndex == -1) { return; } //no list item selected
+                chklstExclude.Items.Clear();
+                for (int i = 0; i < chklstAutoAssign.Items.Count; i++) //add all members except the currently selected member
+                {
+                    if (i != chklstAutoAssign.SelectedIndex)
+                    {
+                        chklstExclude.Items.Add(chklstAutoAssign.GetItemText(chklstAutoAssign.Items[i]));
+                    }
+                }
+                blnExcludeListDirty = false;
+                foreach (TreeNode root in tvSG.Nodes)
+                {
+                    //find member name in node search
+                    TreeNode[] membername = root.Nodes
+                                    .Cast<TreeNode>()
+                                    .Where(r => r.Text == "Member Name:" + chklstAutoAssign.SelectedItem.ToString())
+                                    .ToArray();
+                    if (membername.Length == 0) { continue; } //list item not found in tree
+                    if (membername[0].Nodes.Count > 3) //if there are at least 4 nodes the forth node at index 3 is the exclusion list
+                    {
+                        //get the forth node and parse it 
+                        string[] excludelist = membername[0].Nodes[3].Text.Replace("Don't Pair:", "").Split(";");
+                        foreach (string excld in excludelist)
+                        {
+                            if (string.IsNullOrEmpty(excld)) { break; } //string is empty so move on
+                            try
+                            {
+                                chklstExclude.SetItemChecked(chklstExclude.FindStringExact(excld), true);
+                            }
+                            catch (Exception err)
+                            {
+                                Console.WriteLine("Error trying to check exclusion list: " + excld + ": " + err.Message);
+                            }
+                        }
+
+                    }
+
+                }
+                breakoutLastIndex = chklstAutoAssign.SelectedIndex;
+                blnExcludeListDirty = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("tabBreakoutRooms_Enter\n" + ex.Message);
+
+            }
+
+        }
+
+        private void btnAutoAssignChkAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < chklstAutoAssign.Items.Count; i++) //uncheck all checkboxes in the exclude list
+                {
+                    chklstAutoAssign.SetItemChecked(i, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnAutoAssignChkAll_Click\n" + ex.Message);
+
+            }
+        }
+
+        private void btnAutoAssignUnchkAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < chklstAutoAssign.Items.Count; i++) //uncheck all checkboxes in the exclude list
+                {
+                    chklstAutoAssign.SetItemChecked(i, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnAutoAssignUnchkAll_Click\n" + ex.Message);
+
+            }
+        }
+
+        private void btnExclChkAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < chklstExclude.Items.Count; i++) //uncheck all checkboxes in the exclude list
+                {
+                    chklstExclude.SetItemChecked(i, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnExclChkAll_Click\n" + ex.Message);
+
+            }
+        }
+
+        private void btnExclUnchkAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < chklstExclude.Items.Count; i++) //uncheck all checkboxes in the exclude list
+                {
+                    chklstExclude.SetItemChecked(i, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnExclUnchkAll_Click\n" + ex.Message);
+
+            }
+        }
+
+        private void chklstExclude_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            blnExcludeListDirty = true;
+        }
+
+        private void btnUpdateExclude_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (TreeNode root in tvSG.Nodes)
+                {
+                    string m_name = chklstAutoAssign.SelectedItem.ToString();
+                    //create concat string
+                    string exlst = "Don't Pair:";
+
+                    //find member name in node search
+                    TreeNode[] membername = root.Nodes
+                                    .Cast<TreeNode>()
+                                    .Where(r => r.Text == "Member Name:" + chklstAutoAssign.SelectedItem.ToString())
+                                    .ToArray();
+
+
+                    //remove autoAssign selected member from all exclusion members
+                    //loop through all  
+                    for (int i = 0; i < chklstExclude.Items.Count; i++)
+                    {
+                        //find member name in node search
+                        TreeNode[] includedmember = root.Nodes
+                                        .Cast<TreeNode>()
+                                        .Where(r => r.Text.Contains(chklstExclude.Items[i].ToString()))
+                                        .ToArray();
+                        //check that member exists
+                        if (includedmember.Length != 0)
+                        {
+                            //remove autoAssign selected member from exclusion list if exists 
+                            //member exists so check if the Don't Pair node exists
+                            if (includedmember[0].Nodes.Count > 3)
+                            {
+                                //check if member is already in the exclusion list and remove them if so
+                                includedmember[0].Nodes[3].Text = includedmember[0].Nodes[3].Text.Replace(m_name + ";", "").Replace(m_name, "");
+                                //member's exclusion list is checked for the included members "name;" and removed and also just the "name" wihtout the ";" just in case
+                                // it's on the end of the line
+
+                            }
+
+                        }
+                    }
+
+
+                    for (int x = 0; x < chklstExclude.CheckedItems.Count; x++)
+                    {
+                        //create exclude list for the currently selected member in chklstAutoAssign
+                        exlst += chklstExclude.CheckedItems[x].ToString() + ";";
+
+                        //find the currently excluded member in the tree and add this selected member to their exclude list as well
+                        //find member name in node search
+                        TreeNode[] excludedmember = root.Nodes
+                                        .Cast<TreeNode>()
+                                        .Where(r => r.Text == "Member Name:" + chklstExclude.CheckedItems[x].ToString())
+                                        .ToArray();
+                        //check that member exists
+                        if (excludedmember.Length != 0)
+                        {
+                            //member exists so check if the Don't Pair node exists
+                            if (excludedmember[0].Nodes.Count > 3)
+                            {
+                                //get the forth node and append to it
+                                excludedmember[0].Nodes[3].Text = excludedmember[0].Nodes[3].Text.Insert(11, m_name + ";"); //insert at pos 11 which is = to length of "Don't Pair:"
+                                //since we inserted to an already existing string we need to check if it ends with ";" and remove it if it does
+                                if (excludedmember[0].Nodes[3].Text.EndsWith(";"))
+                                {
+                                    excludedmember[0].Nodes[3].Text = excludedmember[0].Nodes[3].Text[0..^1];
+                                }
+                            }
+                            else
+                            {
+                                //add forth node
+                                excludedmember[0].Nodes.Add("Don't Pair:" + m_name);
+                            }
+
+                        }
+
+                    }
+                    if (exlst.EndsWith(";"))
+                    {
+                        exlst = exlst[0..^1];
+                    }
+
+                    if (membername.Length != 0) //member found
+                    {
+                        if (membername[0].Nodes.Count > 3) //if there are at least 4 nodes the forth node at index 3 is the exclusion list
+                        {
+                            //get the forth node and replace it
+                            membername[0].Nodes[3].Text = exlst;
+
+                        }
+                        else //4th node doesn't exist so add it
+                        {
+                            membername[0].Nodes.Add(exlst);
+                        }
+                    }
+                }
+                blnExcludeListDirty = false;
+                SaveTree(tvSG, cfgPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnUpdateExclude_Click\n" + ex.Message);
+
+            }
+        }
+
+        private void btnExportExclude_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Properties.Settings.Default.BreakoutFolder))
+                {
+                    dlgSCSV.InitialDirectory = Properties.Settings.Default.BreakoutFolder;
+                }
+                dlgSCSV.FileName = breakoutfn;
+                if (dlgSCSV.ShowDialog() == DialogResult.OK)
+                {
+                    Properties.Settings.Default.BreakoutFolder = System.IO.Path.GetDirectoryName(dlgSCSV.FileName);
+                    Properties.Settings.Default.Save();
+                    txtBreakoutFolder.Text = Properties.Settings.Default.BreakoutFolder;
+                    SaveToCSV(dgvBreakoutRooms, dlgSCSV.FileName, 2);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnExportExclude_Click\n" + ex.Message);
+            }
+        }
+
+        private void btnAddRoom_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtAddRoom.Text)) { return; }
+                //add room to list
+                lstbxBreakoutRooms.Items.Add(txtAddRoom.Text);
+                txtAddRoom.Text = "Room " + (lstbxBreakoutRooms.Items.Count + 1).ToString();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnAddRoom_Click\n" + ex.Message);
+            }
+        }
+
+        private void btnDelRoom_Click(object sender, EventArgs e)
+        {
+            try
+            {                
+                //delete room from list
+                if (lstbxBreakoutRooms.SelectedIndex == -1) { return; }
+                lstbxBreakoutRooms.Items.RemoveAt(lstbxBreakoutRooms.SelectedIndex);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnDelRoom_Click\n" + ex.Message);
+            }
+        }
+
+        private void btnRandomizeRooms_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //save breakout rooms to settings so can reload on startup
+                string borms = "";
+                foreach (object o in lstbxBreakoutRooms.Items)
+                {
+                    borms += o.ToString() + "|~|";
+                }
+                if (borms.EndsWith("|~|"))
+                {
+                    borms = borms[0..^3];
+                }
+                Properties.Settings.Default.BreakoutRooms = borms;
+                Properties.Settings.Default.Save();
+
+                if (lstbxBreakoutRooms.Items.Count == 0) { return; } //no breakout rooms to add to
+                //declare an array with the number of rooms
+                List<Breakouts>[] bo = new List<Breakouts>[lstbxBreakoutRooms.Items.Count];
+                for (int i = 0;i < lstbxBreakoutRooms.Items.Count; i++)
+                {
+                    bo[i] = new List<Breakouts>();
+                }
+
+                //declare new array to keep track of number of people added per room
+                int[] pplnrm = Enumerable.Repeat(0, lstbxBreakoutRooms.Items.Count).ToArray(); //probably not needed to initialize it this way but I like to make sure they all start at 0
+
+                //declare bool to determine if all rooms are full
+                bool allroomsfull = false;
+
+                //declare an exclusion list of rooms that have been attempted so the random number generator wont re-attempt 
+                HashSet<int> elist = new HashSet<int>();
+
+                //loop thu all member name nodes and place members in list structure
+                foreach (TreeNode root in tvSG.Nodes)
+                {
+                    if (allroomsfull) { break; }
+                    foreach (TreeNode membername in root.Nodes)
+                    {
+                        if (allroomsfull) { break; }
+                        elist.Clear(); //clear the list for every new person
+                        string memname = membername.Text.Replace("Member Name:", "");//get the actual member name without the "Member Name:" in front of it
+
+                        //verify that this member is not disabled in the checkedlistbox
+                        if (!chklstAutoAssign.CheckedItems.Contains(memname)) { continue; }
+
+                        for (int i = 0; i < lstbxBreakoutRooms.Items.Count + 2; i++)//try access to each room, if denied all then don't put member in a room at all
+                        {
+                            
+                            //first get a random room number
+                            int rm = GiveMeANumber(elist, 0, bo.Length);
+                            if (rm == -1) {
+                                allroomsfull = true;
+                                break; 
+                            }//out of rooms
+                            if (pplnrm[rm] == Convert.ToInt32(numMaxPerRoom.Value)) //check if the room is maxed out
+                            {
+                                elist.Add(rm);//add the room to the exclusion list because the room is maxed out
+                                continue; //start the next loop without processing anything below this round
+                            }
+                            string[] excl;
+                            bool cantjoin = false;
+                            
+                            //then check that room is not excluded for this memeber 
+                            if (membername.Nodes.Count > 3)
+                            {
+                                excl = membername.Nodes[3].Text.Replace("Don't Pair:", "").Split(";");
+                                foreach (string xcl in excl)
+                                {
+                                    if (bo[rm].Count > 0) //if breakout room has entries that means there are people already assigned to it so now we can check to see if they can be paired
+                                    {
+                                        foreach (Breakouts member in bo[rm]) //get each breakout struct from list
+                                        {
+                                            if (member.MemberName.Contains(xcl) && !string.IsNullOrEmpty(xcl)) //check if any of the members in the room are on the new persons exclusion list
+                                            {
+                                                cantjoin = true;
+                                                break;
+                                            }
+
+                                        }
+                                        if (cantjoin) { break; }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+
+                                }
+                            }
+                            //foreach (Breakouts member in bo[rm]) //get each breakout struct from list
+                            //{
+                                //if (member.Exclusion.Length > 0)
+                                //{
+                                //    if (member.Exclusion.Contains(memname)) //check that the new person isn't on anyone in the rooms exclusion list
+                                //    {
+                                //        cantjoin = true;
+
+                                //    }
+                                //}
+                            //}
+                                //if cantjoin is false then memeber can be added to this room
+                            if (!cantjoin)
+                            {
+                                Breakouts b = new Breakouts();
+                                //add member
+                                b.Room = lstbxBreakoutRooms.Items[rm].ToString();
+                                b.Email = membername.Nodes[0].Text.Replace("Emails:", "");
+                                b.MemberName = memname;
+                                if (membername.Nodes.Count > 3)
+                                {
+                                    b.Exclusion = membername.Nodes[3].Text.Replace("Don't Pair:", "");
+                                }
+                                else
+                                {
+                                    b.Exclusion = "";
+                                }
+                                bo[rm].Add(b);
+                                pplnrm[rm]++;
+
+                                break;
+                            }
+                            elist.Add(rm);
+                        }                        
+                    }
+                }
+                //all members have been added to the hashset
+                //now sort through hashset and add to datagridview
+
+                //clear any existing cells
+                dgvBreakoutRooms.Rows.Clear();
+                for (int i = 0;i < lstbxBreakoutRooms.Items.Count; i++)
+                {
+                    foreach (Breakouts b in bo[i])
+                    {
+                        string[] emails = b.Email.Split(","); //each member can have multiple emails which are separated by a "," 
+                        foreach (string em in emails) //list each email for the member in the breakout room, this will ensure no matter how they log in they will be put in the room
+                        {
+                            //check to make sure email is valid before adding
+                            if (em.Contains("@") && em.Contains("."))
+                            {
+                                //add to the grid
+                                dgvBreakoutRooms.Rows.Add(b.Room, em, b.MemberName);
+                            }
+                            
+                        }
+
+                    }
+                }
+
+                //remove duplicate emails
+                removeDuplicates();
+
+                //dgvBreakoutRooms.Rows[0].Cells[0].Value = "1st";
+                //dgvBreakoutRooms.Rows[0].Cells[1].Value = "Second";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnRandomizeRooms_Click\n" + ex.Message);
+            }
+        }
+
+        private int GiveMeANumber(HashSet<int> exclude, int min, int max)
+        {
+            try
+            {
+                //var exclude = new HashSet<int>() {1, 2, 3};
+                var range = Enumerable.Range(min, max).Where(i => !exclude.Contains(i));
+
+                var rand = new System.Random();
+                int index = rand.Next(min, max - exclude.Count);
+                return range.ElementAt(index);
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+        }
+
+        private void tableLayoutPanel14_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteRow_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Int32 selectedRowCount = dgvBreakoutRooms.Rows.GetRowCount(DataGridViewElementStates.Selected);
+                if (selectedRowCount > 0)
+                {
+                    for (int i = 0; i < selectedRowCount; i++)
+                    {
+                        dgvBreakoutRooms.Rows.RemoveAt(dgvBreakoutRooms.SelectedRows[0].Index);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnDeleteRow_Click\n" + ex.Message);
+            }
+        }
+
+        private void removeDuplicates()
+        {
+            try
+            {
+                var results = dgvBreakoutRooms
+               .Rows
+               .OfType<DataGridViewRow>()
+               .GroupBy(x => new { x.Cells[1].Value })
+               .Select(group => new { Item = group.Key, Row = group, Count = group.Count() })
+               .ToList();
+
+
+                for (var index = 0; index < results.Count; index++)
+                {
+                    Console.WriteLine(results[index].Row.FirstOrDefault()?.Cells[1].Value);
+                    results[index].Row.Skip(1)
+                        .ToList()
+                        .ForEach(row => dgvBreakoutRooms.Rows.Remove(row));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("removeDuplicates\n" + ex.Message);
+            }
+        }
+
+       
     }
 }

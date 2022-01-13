@@ -29,6 +29,7 @@ namespace Attendance_Counter
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSG = new System.Windows.Forms.TabPage();
@@ -96,6 +97,34 @@ namespace Attendance_Counter
             this.txtVNonPolled = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txtVTotal = new System.Windows.Forms.TextBox();
+            this.tabBreakoutRooms = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.chklstAutoAssign = new System.Windows.Forms.CheckedListBox();
+            this.chklstExclude = new System.Windows.Forms.CheckedListBox();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnAutoAssignChkAll = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.btnAutoAssignUnchkAll = new System.Windows.Forms.Button();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnExclChkAll = new System.Windows.Forms.Button();
+            this.btnExclUnchkAll = new System.Windows.Forms.Button();
+            this.btnExportExclude = new System.Windows.Forms.Button();
+            this.btnUpdateExclude = new System.Windows.Forms.Button();
+            this.lstbxBreakoutRooms = new System.Windows.Forms.ListBox();
+            this.dgvBreakoutRooms = new System.Windows.Forms.DataGridView();
+            this.Preassign_Room_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email_Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Member_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnAddRoom = new System.Windows.Forms.Button();
+            this.btnDelRoom = new System.Windows.Forms.Button();
+            this.txtAddRoom = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
+            this.label23 = new System.Windows.Forms.Label();
+            this.btnRandomizeRooms = new System.Windows.Forms.Button();
+            this.numMaxPerRoom = new System.Windows.Forms.NumericUpDown();
+            this.btnDeleteRow = new System.Windows.Forms.Button();
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label15 = new System.Windows.Forms.Label();
@@ -108,10 +137,13 @@ namespace Attendance_Counter
             this.txtKHSFormat = new System.Windows.Forms.TextBox();
             this.txtDefaultFolder = new System.Windows.Forms.TextBox();
             this.txtReportFolder = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtBreakoutFolder = new System.Windows.Forms.TextBox();
             this.dlgOF = new System.Windows.Forms.OpenFileDialog();
             this.dlgSF = new System.Windows.Forms.SaveFileDialog();
             this.dlgSCSV = new System.Windows.Forms.SaveFileDialog();
             this.dlgFB = new System.Windows.Forms.FolderBrowserDialog();
+            this.ToolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabSG.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -130,6 +162,14 @@ namespace Attendance_Counter
             this.tableLayoutPanel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).BeginInit();
             this.tableLayoutPanel12.SuspendLayout();
+            this.tabBreakoutRooms.SuspendLayout();
+            this.tableLayoutPanel14.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBreakoutRooms)).BeginInit();
+            this.tableLayoutPanel17.SuspendLayout();
+            this.tableLayoutPanel18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxPerRoom)).BeginInit();
             this.tabSettings.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDP)).BeginInit();
@@ -140,12 +180,13 @@ namespace Attendance_Counter
             this.tabControl1.Controls.Add(this.tabSG);
             this.tabControl1.Controls.Add(this.tabAttendance);
             this.tabControl1.Controls.Add(this.tabViewer);
+            this.tabControl1.Controls.Add(this.tabBreakoutRooms);
             this.tabControl1.Controls.Add(this.tabSettings);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 474);
+            this.tabControl1.Size = new System.Drawing.Size(974, 511);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -155,7 +196,7 @@ namespace Attendance_Counter
             this.tabSG.Location = new System.Drawing.Point(4, 24);
             this.tabSG.Name = "tabSG";
             this.tabSG.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSG.Size = new System.Drawing.Size(792, 446);
+            this.tabSG.Size = new System.Drawing.Size(966, 483);
             this.tabSG.TabIndex = 0;
             this.tabSG.Text = "Service Groups";
             this.tabSG.UseVisualStyleBackColor = true;
@@ -172,7 +213,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(786, 440);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(960, 477);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -205,7 +246,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(547, 434);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(669, 471);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // txtUN
@@ -216,7 +257,7 @@ namespace Attendance_Counter
             this.txtUN.Location = new System.Drawing.Point(141, 105);
             this.txtUN.Name = "txtUN";
             this.txtUN.PlaceholderText = "Jane Doe, Jane_Doe,J Doe";
-            this.txtUN.Size = new System.Drawing.Size(402, 23);
+            this.txtUN.Size = new System.Drawing.Size(524, 23);
             this.txtUN.TabIndex = 7;
             this.txtUN.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtUN_MouseDoubleClick);
             // 
@@ -228,7 +269,7 @@ namespace Attendance_Counter
             this.txtEM.Location = new System.Drawing.Point(141, 70);
             this.txtEM.Name = "txtEM";
             this.txtEM.PlaceholderText = "JaneDoe@email.com,Jane.Doe.32@email.com";
-            this.txtEM.Size = new System.Drawing.Size(402, 23);
+            this.txtEM.Size = new System.Drawing.Size(524, 23);
             this.txtEM.TabIndex = 6;
             this.txtEM.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtEM_MouseDoubleClick);
             // 
@@ -240,7 +281,7 @@ namespace Attendance_Counter
             this.txtMN.Location = new System.Drawing.Point(141, 36);
             this.txtMN.Name = "txtMN";
             this.txtMN.PlaceholderText = "Jane Doe";
-            this.txtMN.Size = new System.Drawing.Size(402, 23);
+            this.txtMN.Size = new System.Drawing.Size(524, 23);
             this.txtMN.TabIndex = 5;
             this.txtMN.TextChanged += new System.EventHandler(this.txtMN_TextChanged);
             this.txtMN.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtMN_MouseDoubleClick);
@@ -305,7 +346,7 @@ namespace Attendance_Counter
             this.txtServiceGroup.Location = new System.Drawing.Point(141, 4);
             this.txtServiceGroup.Name = "txtServiceGroup";
             this.txtServiceGroup.PlaceholderText = "Ex: Elder#1 Group";
-            this.txtServiceGroup.Size = new System.Drawing.Size(402, 23);
+            this.txtServiceGroup.Size = new System.Drawing.Size(524, 23);
             this.txtServiceGroup.TabIndex = 4;
             // 
             // tableLayoutPanel4
@@ -339,7 +380,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(402, 256);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(524, 293);
             this.tableLayoutPanel4.TabIndex = 8;
             // 
             // btnLoadPoll
@@ -349,7 +390,7 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadPoll.Location = new System.Drawing.Point(5, 71);
             this.btnLoadPoll.Name = "btnLoadPoll";
-            this.btnLoadPoll.Size = new System.Drawing.Size(125, 25);
+            this.btnLoadPoll.Size = new System.Drawing.Size(165, 25);
             this.btnLoadPoll.TabIndex = 5;
             this.btnLoadPoll.Text = "Load Poll";
             this.btnLoadPoll.UseVisualStyleBackColor = true;
@@ -360,9 +401,9 @@ namespace Attendance_Counter
             this.btnRemoveGroupElement.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveGroupElement.Location = new System.Drawing.Point(271, 5);
+            this.btnRemoveGroupElement.Location = new System.Drawing.Point(352, 5);
             this.btnRemoveGroupElement.Name = "btnRemoveGroupElement";
-            this.btnRemoveGroupElement.Size = new System.Drawing.Size(126, 25);
+            this.btnRemoveGroupElement.Size = new System.Drawing.Size(167, 25);
             this.btnRemoveGroupElement.TabIndex = 2;
             this.btnRemoveGroupElement.Text = "Remove Entry";
             this.btnRemoveGroupElement.UseVisualStyleBackColor = true;
@@ -373,9 +414,9 @@ namespace Attendance_Counter
             this.btnUpdateGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdateGroup.Location = new System.Drawing.Point(138, 5);
+            this.btnUpdateGroup.Location = new System.Drawing.Point(178, 5);
             this.btnUpdateGroup.Name = "btnUpdateGroup";
-            this.btnUpdateGroup.Size = new System.Drawing.Size(125, 25);
+            this.btnUpdateGroup.Size = new System.Drawing.Size(166, 25);
             this.btnUpdateGroup.TabIndex = 1;
             this.btnUpdateGroup.Text = "Update Entry";
             this.btnUpdateGroup.UseVisualStyleBackColor = true;
@@ -388,7 +429,7 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadParticipantsList.Location = new System.Drawing.Point(5, 38);
             this.btnLoadParticipantsList.Name = "btnLoadParticipantsList";
-            this.btnLoadParticipantsList.Size = new System.Drawing.Size(125, 25);
+            this.btnLoadParticipantsList.Size = new System.Drawing.Size(165, 25);
             this.btnLoadParticipantsList.TabIndex = 2;
             this.btnLoadParticipantsList.Text = "Load Participants";
             this.btnLoadParticipantsList.UseVisualStyleBackColor = true;
@@ -401,7 +442,7 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddGroup.Location = new System.Drawing.Point(5, 5);
             this.btnAddGroup.Name = "btnAddGroup";
-            this.btnAddGroup.Size = new System.Drawing.Size(125, 25);
+            this.btnAddGroup.Size = new System.Drawing.Size(165, 25);
             this.btnAddGroup.TabIndex = 0;
             this.btnAddGroup.Text = "Add Entry";
             this.btnAddGroup.UseVisualStyleBackColor = true;
@@ -416,10 +457,10 @@ namespace Attendance_Counter
             this.lstbxName.ItemHeight = 15;
             this.lstbxName.Items.AddRange(new object[] {
             "User Names"});
-            this.lstbxName.Location = new System.Drawing.Point(138, 71);
+            this.lstbxName.Location = new System.Drawing.Point(178, 71);
             this.lstbxName.Name = "lstbxName";
             this.tableLayoutPanel4.SetRowSpan(this.lstbxName, 4);
-            this.lstbxName.Size = new System.Drawing.Size(125, 169);
+            this.lstbxName.Size = new System.Drawing.Size(166, 214);
             this.lstbxName.TabIndex = 3;
             this.lstbxName.SelectedIndexChanged += new System.EventHandler(this.lstbxName_SelectedIndexChanged);
             this.lstbxName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstbxName_MouseDoubleClick);
@@ -433,10 +474,10 @@ namespace Attendance_Counter
             this.lstbxEmail.ItemHeight = 15;
             this.lstbxEmail.Items.AddRange(new object[] {
             "Member Emails"});
-            this.lstbxEmail.Location = new System.Drawing.Point(271, 71);
+            this.lstbxEmail.Location = new System.Drawing.Point(352, 71);
             this.lstbxEmail.Name = "lstbxEmail";
             this.tableLayoutPanel4.SetRowSpan(this.lstbxEmail, 4);
-            this.lstbxEmail.Size = new System.Drawing.Size(126, 169);
+            this.lstbxEmail.Size = new System.Drawing.Size(167, 214);
             this.lstbxEmail.TabIndex = 4;
             this.lstbxEmail.SelectedIndexChanged += new System.EventHandler(this.lstbxEmail_SelectedIndexChanged);
             this.lstbxEmail.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstbxEmail_MouseDoubleClick);
@@ -446,11 +487,11 @@ namespace Attendance_Counter
             this.txtPartDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPartDate.Location = new System.Drawing.Point(271, 38);
+            this.txtPartDate.Location = new System.Drawing.Point(352, 38);
             this.txtPartDate.Name = "txtPartDate";
             this.txtPartDate.PlaceholderText = "Participants Not Loaded!";
             this.txtPartDate.ReadOnly = true;
-            this.txtPartDate.Size = new System.Drawing.Size(126, 23);
+            this.txtPartDate.Size = new System.Drawing.Size(167, 23);
             this.txtPartDate.TabIndex = 7;
             // 
             // label5
@@ -459,9 +500,9 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(138, 35);
+            this.label5.Location = new System.Drawing.Point(178, 35);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(125, 31);
+            this.label5.Size = new System.Drawing.Size(166, 31);
             this.label5.TabIndex = 8;
             this.label5.Text = "Record Date:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -473,7 +514,7 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCompare.Location = new System.Drawing.Point(5, 138);
             this.btnCompare.Name = "btnCompare";
-            this.btnCompare.Size = new System.Drawing.Size(125, 26);
+            this.btnCompare.Size = new System.Drawing.Size(165, 26);
             this.btnCompare.TabIndex = 6;
             this.btnCompare.Text = "Compare";
             this.btnCompare.UseVisualStyleBackColor = true;
@@ -488,7 +529,7 @@ namespace Attendance_Counter
             this.txtPollDate.Name = "txtPollDate";
             this.txtPollDate.PlaceholderText = "Poll not loaded!";
             this.txtPollDate.ReadOnly = true;
-            this.txtPollDate.Size = new System.Drawing.Size(125, 23);
+            this.txtPollDate.Size = new System.Drawing.Size(165, 23);
             this.txtPollDate.TabIndex = 9;
             // 
             // txtKH
@@ -503,7 +544,7 @@ namespace Attendance_Counter
             this.txtKH.Name = "txtKH";
             this.txtKH.PlaceholderText = "Paste KHConf Data Here!";
             this.txtKH.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtKH.Size = new System.Drawing.Size(125, 79);
+            this.txtKH.Size = new System.Drawing.Size(165, 116);
             this.txtKH.TabIndex = 10;
             // 
             // tableLayoutPanel5
@@ -526,7 +567,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(130, 256);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(130, 293);
             this.tableLayoutPanel5.TabIndex = 9;
             // 
             // btnImport
@@ -600,7 +641,7 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDefaultCount.Location = new System.Drawing.Point(141, 141);
             this.txtDefaultCount.Name = "txtDefaultCount";
-            this.txtDefaultCount.Size = new System.Drawing.Size(402, 23);
+            this.txtDefaultCount.Size = new System.Drawing.Size(524, 23);
             this.txtDefaultCount.TabIndex = 11;
             this.txtDefaultCount.Text = "1";
             this.txtDefaultCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDefaultCount_KeyPress);
@@ -612,12 +653,12 @@ namespace Attendance_Counter
             this.tableLayoutPanel8.Controls.Add(this.tvSG, 0, 1);
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(556, 3);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(678, 3);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 67F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(227, 434);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(279, 471);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // tvSG
@@ -625,7 +666,7 @@ namespace Attendance_Counter
             this.tvSG.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvSG.Location = new System.Drawing.Point(3, 70);
             this.tvSG.Name = "tvSG";
-            this.tvSG.Size = new System.Drawing.Size(221, 361);
+            this.tvSG.Size = new System.Drawing.Size(273, 398);
             this.tvSG.TabIndex = 2;
             this.tvSG.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSG_AfterSelect);
             // 
@@ -644,7 +685,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel9.RowCount = 2;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.74627F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.25373F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(221, 61);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(273, 61);
             this.tableLayoutPanel9.TabIndex = 3;
             // 
             // txtSearchGroups
@@ -654,7 +695,7 @@ namespace Attendance_Counter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearchGroups.Location = new System.Drawing.Point(3, 33);
             this.txtSearchGroups.Name = "txtSearchGroups";
-            this.txtSearchGroups.Size = new System.Drawing.Size(104, 23);
+            this.txtSearchGroups.Size = new System.Drawing.Size(130, 23);
             this.txtSearchGroups.TabIndex = 0;
             this.txtSearchGroups.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearchGroups_KeyPress);
             // 
@@ -663,9 +704,9 @@ namespace Attendance_Counter
             this.btnSearchGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchGroups.Location = new System.Drawing.Point(113, 33);
+            this.btnSearchGroups.Location = new System.Drawing.Point(139, 33);
             this.btnSearchGroups.Name = "btnSearchGroups";
-            this.btnSearchGroups.Size = new System.Drawing.Size(105, 25);
+            this.btnSearchGroups.Size = new System.Drawing.Size(131, 25);
             this.btnSearchGroups.TabIndex = 1;
             this.btnSearchGroups.Text = "Search";
             this.btnSearchGroups.UseVisualStyleBackColor = true;
@@ -679,7 +720,7 @@ namespace Attendance_Counter
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(3, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(104, 30);
+            this.label6.Size = new System.Drawing.Size(130, 30);
             this.label6.TabIndex = 2;
             this.label6.Text = "Search Groups:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -689,9 +730,9 @@ namespace Attendance_Counter
             this.btnMove.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMove.Location = new System.Drawing.Point(113, 3);
+            this.btnMove.Location = new System.Drawing.Point(139, 3);
             this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(105, 24);
+            this.btnMove.Size = new System.Drawing.Size(131, 24);
             this.btnMove.TabIndex = 3;
             this.btnMove.Text = "Move";
             this.btnMove.UseVisualStyleBackColor = true;
@@ -703,7 +744,7 @@ namespace Attendance_Counter
             this.tabAttendance.Location = new System.Drawing.Point(4, 24);
             this.tabAttendance.Name = "tabAttendance";
             this.tabAttendance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAttendance.Size = new System.Drawing.Size(792, 446);
+            this.tabAttendance.Size = new System.Drawing.Size(966, 483);
             this.tabAttendance.TabIndex = 1;
             this.tabAttendance.Text = "Attendance";
             this.tabAttendance.UseVisualStyleBackColor = true;
@@ -711,7 +752,7 @@ namespace Attendance_Counter
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 786F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 960F));
             this.tableLayoutPanel2.Controls.Add(this.dgvReport, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel7, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -720,7 +761,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(786, 440);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(960, 477);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // dgvReport
@@ -732,7 +773,7 @@ namespace Attendance_Counter
             this.dgvReport.Location = new System.Drawing.Point(3, 46);
             this.dgvReport.Name = "dgvReport";
             this.dgvReport.RowTemplate.Height = 25;
-            this.dgvReport.Size = new System.Drawing.Size(780, 391);
+            this.dgvReport.Size = new System.Drawing.Size(954, 428);
             this.dgvReport.TabIndex = 0;
             this.dgvReport.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReport_CellClick);
             this.dgvReport.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReport_CellEndEdit);
@@ -761,7 +802,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(780, 37);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(954, 37);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // btnSaveCSV
@@ -856,7 +897,7 @@ namespace Attendance_Counter
             this.tabViewer.Controls.Add(this.tableLayoutPanel10);
             this.tabViewer.Location = new System.Drawing.Point(4, 24);
             this.tabViewer.Name = "tabViewer";
-            this.tabViewer.Size = new System.Drawing.Size(792, 446);
+            this.tabViewer.Size = new System.Drawing.Size(966, 483);
             this.tabViewer.TabIndex = 3;
             this.tabViewer.Text = "Viewer";
             this.tabViewer.UseVisualStyleBackColor = true;
@@ -864,7 +905,7 @@ namespace Attendance_Counter
             // tableLayoutPanel10
             // 
             this.tableLayoutPanel10.ColumnCount = 1;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 792F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 966F));
             this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel11, 0, 1);
             this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel12, 0, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -873,7 +914,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel10.RowCount = 2;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(792, 446);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(966, 483);
             this.tableLayoutPanel10.TabIndex = 0;
             // 
             // tableLayoutPanel11
@@ -888,7 +929,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(786, 400);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(960, 437);
             this.tableLayoutPanel11.TabIndex = 0;
             // 
             // tableLayoutPanel13
@@ -905,7 +946,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(179, 394);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(221, 431);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // lstbxFolder
@@ -915,7 +956,7 @@ namespace Attendance_Counter
             this.lstbxFolder.ItemHeight = 15;
             this.lstbxFolder.Location = new System.Drawing.Point(3, 33);
             this.lstbxFolder.Name = "lstbxFolder";
-            this.lstbxFolder.Size = new System.Drawing.Size(173, 328);
+            this.lstbxFolder.Size = new System.Drawing.Size(215, 365);
             this.lstbxFolder.TabIndex = 0;
             this.lstbxFolder.SelectedIndexChanged += new System.EventHandler(this.lstbxFolder_SelectedIndexChanged);
             // 
@@ -928,7 +969,7 @@ namespace Attendance_Counter
             this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label10.Location = new System.Drawing.Point(3, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(173, 30);
+            this.label10.Size = new System.Drawing.Size(215, 30);
             this.label10.TabIndex = 1;
             this.label10.Text = "Click on File to Load:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -938,9 +979,9 @@ namespace Attendance_Counter
             this.btnReverseListOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReverseListOrder.Location = new System.Drawing.Point(3, 367);
+            this.btnReverseListOrder.Location = new System.Drawing.Point(3, 404);
             this.btnReverseListOrder.Name = "btnReverseListOrder";
-            this.btnReverseListOrder.Size = new System.Drawing.Size(173, 24);
+            this.btnReverseListOrder.Size = new System.Drawing.Size(215, 24);
             this.btnReverseListOrder.TabIndex = 2;
             this.btnReverseListOrder.Text = "Reverse Order";
             this.btnReverseListOrder.UseVisualStyleBackColor = true;
@@ -952,11 +993,11 @@ namespace Attendance_Counter
             this.dgViewer.AllowUserToDeleteRows = false;
             this.dgViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgViewer.Location = new System.Drawing.Point(188, 3);
+            this.dgViewer.Location = new System.Drawing.Point(230, 3);
             this.dgViewer.Name = "dgViewer";
             this.dgViewer.ReadOnly = true;
             this.dgViewer.RowTemplate.Height = 25;
-            this.dgViewer.Size = new System.Drawing.Size(595, 394);
+            this.dgViewer.Size = new System.Drawing.Size(727, 431);
             this.dgViewer.TabIndex = 1;
             // 
             // tableLayoutPanel12
@@ -982,7 +1023,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 1;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(786, 34);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(960, 34);
             this.tableLayoutPanel12.TabIndex = 1;
             // 
             // btnSelectFolder
@@ -1072,13 +1113,378 @@ namespace Attendance_Counter
             this.txtVTotal.Size = new System.Drawing.Size(50, 23);
             this.txtVTotal.TabIndex = 8;
             // 
+            // tabBreakoutRooms
+            // 
+            this.tabBreakoutRooms.Controls.Add(this.tableLayoutPanel14);
+            this.tabBreakoutRooms.Location = new System.Drawing.Point(4, 24);
+            this.tabBreakoutRooms.Name = "tabBreakoutRooms";
+            this.tabBreakoutRooms.Size = new System.Drawing.Size(966, 483);
+            this.tabBreakoutRooms.TabIndex = 5;
+            this.tabBreakoutRooms.Text = "Breakout Rooms";
+            this.tabBreakoutRooms.UseVisualStyleBackColor = true;
+            this.tabBreakoutRooms.Enter += new System.EventHandler(this.tabBreakoutRooms_Enter);
+            // 
+            // tableLayoutPanel14
+            // 
+            this.tableLayoutPanel14.ColumnCount = 2;
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.87374F));
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.12626F));
+            this.tableLayoutPanel14.Controls.Add(this.chklstAutoAssign, 0, 1);
+            this.tableLayoutPanel14.Controls.Add(this.chklstExclude, 1, 1);
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel15, 0, 0);
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel16, 1, 0);
+            this.tableLayoutPanel14.Controls.Add(this.lstbxBreakoutRooms, 0, 3);
+            this.tableLayoutPanel14.Controls.Add(this.dgvBreakoutRooms, 1, 3);
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel17, 0, 2);
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel18, 1, 2);
+            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel14.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
+            this.tableLayoutPanel14.RowCount = 4;
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(966, 483);
+            this.tableLayoutPanel14.TabIndex = 0;
+            this.tableLayoutPanel14.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel14_Paint);
+            // 
+            // chklstAutoAssign
+            // 
+            this.chklstAutoAssign.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chklstAutoAssign.FormattingEnabled = true;
+            this.chklstAutoAssign.Location = new System.Drawing.Point(3, 103);
+            this.chklstAutoAssign.Name = "chklstAutoAssign";
+            this.chklstAutoAssign.Size = new System.Drawing.Size(475, 168);
+            this.chklstAutoAssign.TabIndex = 0;
+            this.chklstAutoAssign.SelectedIndexChanged += new System.EventHandler(this.chklstAutoAssign_SelectedIndexChanged);
+            // 
+            // chklstExclude
+            // 
+            this.chklstExclude.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chklstExclude.FormattingEnabled = true;
+            this.chklstExclude.Location = new System.Drawing.Point(484, 103);
+            this.chklstExclude.Name = "chklstExclude";
+            this.chklstExclude.Size = new System.Drawing.Size(479, 168);
+            this.chklstExclude.TabIndex = 1;
+            this.chklstExclude.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chklstExclude_ItemCheck);
+            // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel15.Controls.Add(this.btnAutoAssignChkAll, 0, 0);
+            this.tableLayoutPanel15.Controls.Add(this.label21, 0, 2);
+            this.tableLayoutPanel15.Controls.Add(this.btnAutoAssignUnchkAll, 0, 1);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 3;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(475, 94);
+            this.tableLayoutPanel15.TabIndex = 2;
+            // 
+            // btnAutoAssignChkAll
+            // 
+            this.btnAutoAssignChkAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAutoAssignChkAll.Location = new System.Drawing.Point(4, 4);
+            this.btnAutoAssignChkAll.Name = "btnAutoAssignChkAll";
+            this.btnAutoAssignChkAll.Size = new System.Drawing.Size(142, 24);
+            this.btnAutoAssignChkAll.TabIndex = 4;
+            this.btnAutoAssignChkAll.Text = "Check All";
+            this.btnAutoAssignChkAll.UseVisualStyleBackColor = true;
+            this.btnAutoAssignChkAll.Click += new System.EventHandler(this.btnAutoAssignChkAll_Click);
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.tableLayoutPanel15.SetColumnSpan(this.label21, 2);
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label21.Location = new System.Drawing.Point(4, 63);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(467, 30);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "Auto Assign to Breakout Room";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // btnAutoAssignUnchkAll
+            // 
+            this.btnAutoAssignUnchkAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAutoAssignUnchkAll.Location = new System.Drawing.Point(4, 35);
+            this.btnAutoAssignUnchkAll.Name = "btnAutoAssignUnchkAll";
+            this.btnAutoAssignUnchkAll.Size = new System.Drawing.Size(142, 24);
+            this.btnAutoAssignUnchkAll.TabIndex = 5;
+            this.btnAutoAssignUnchkAll.Text = "Uncheck All";
+            this.btnAutoAssignUnchkAll.UseVisualStyleBackColor = true;
+            this.btnAutoAssignUnchkAll.Click += new System.EventHandler(this.btnAutoAssignUnchkAll_Click);
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel16.ColumnCount = 3;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 172F));
+            this.tableLayoutPanel16.Controls.Add(this.label22, 0, 2);
+            this.tableLayoutPanel16.Controls.Add(this.btnExclChkAll, 0, 0);
+            this.tableLayoutPanel16.Controls.Add(this.btnExclUnchkAll, 0, 1);
+            this.tableLayoutPanel16.Controls.Add(this.btnExportExclude, 2, 0);
+            this.tableLayoutPanel16.Controls.Add(this.btnUpdateExclude, 2, 1);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(484, 3);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 3;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(479, 94);
+            this.tableLayoutPanel16.TabIndex = 3;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.AutoSize = true;
+            this.tableLayoutPanel16.SetColumnSpan(this.label22, 2);
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label22.Location = new System.Drawing.Point(4, 63);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(298, 30);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "Don\'t Pair (exclude)";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // btnExclChkAll
+            // 
+            this.btnExclChkAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExclChkAll.Location = new System.Drawing.Point(4, 4);
+            this.btnExclChkAll.Name = "btnExclChkAll";
+            this.btnExclChkAll.Size = new System.Drawing.Size(131, 24);
+            this.btnExclChkAll.TabIndex = 3;
+            this.btnExclChkAll.Text = "Check All";
+            this.btnExclChkAll.UseVisualStyleBackColor = true;
+            this.btnExclChkAll.Click += new System.EventHandler(this.btnExclChkAll_Click);
+            // 
+            // btnExclUnchkAll
+            // 
+            this.btnExclUnchkAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExclUnchkAll.Location = new System.Drawing.Point(4, 35);
+            this.btnExclUnchkAll.Name = "btnExclUnchkAll";
+            this.btnExclUnchkAll.Size = new System.Drawing.Size(131, 24);
+            this.btnExclUnchkAll.TabIndex = 4;
+            this.btnExclUnchkAll.Text = "Uncheck All";
+            this.btnExclUnchkAll.UseVisualStyleBackColor = true;
+            this.btnExclUnchkAll.Click += new System.EventHandler(this.btnExclUnchkAll_Click);
+            // 
+            // btnExportExclude
+            // 
+            this.btnExportExclude.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExportExclude.Location = new System.Drawing.Point(309, 4);
+            this.btnExportExclude.Name = "btnExportExclude";
+            this.btnExportExclude.Size = new System.Drawing.Size(166, 24);
+            this.btnExportExclude.TabIndex = 2;
+            this.btnExportExclude.Text = "Export";
+            this.btnExportExclude.UseVisualStyleBackColor = true;
+            this.btnExportExclude.Click += new System.EventHandler(this.btnExportExclude_Click);
+            // 
+            // btnUpdateExclude
+            // 
+            this.btnUpdateExclude.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdateExclude.Location = new System.Drawing.Point(309, 35);
+            this.btnUpdateExclude.Name = "btnUpdateExclude";
+            this.btnUpdateExclude.Size = new System.Drawing.Size(166, 24);
+            this.btnUpdateExclude.TabIndex = 1;
+            this.btnUpdateExclude.Text = "Update";
+            this.btnUpdateExclude.UseVisualStyleBackColor = true;
+            this.btnUpdateExclude.Click += new System.EventHandler(this.btnUpdateExclude_Click);
+            // 
+            // lstbxBreakoutRooms
+            // 
+            this.lstbxBreakoutRooms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstbxBreakoutRooms.FormattingEnabled = true;
+            this.lstbxBreakoutRooms.ItemHeight = 15;
+            this.lstbxBreakoutRooms.Location = new System.Drawing.Point(3, 311);
+            this.lstbxBreakoutRooms.Name = "lstbxBreakoutRooms";
+            this.lstbxBreakoutRooms.Size = new System.Drawing.Size(475, 169);
+            this.lstbxBreakoutRooms.TabIndex = 4;
+            // 
+            // dgvBreakoutRooms
+            // 
+            this.dgvBreakoutRooms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBreakoutRooms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Preassign_Room_Name,
+            this.Email_Address,
+            this.Member_Name});
+            this.dgvBreakoutRooms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvBreakoutRooms.Location = new System.Drawing.Point(484, 311);
+            this.dgvBreakoutRooms.Name = "dgvBreakoutRooms";
+            this.dgvBreakoutRooms.RowTemplate.Height = 25;
+            this.dgvBreakoutRooms.Size = new System.Drawing.Size(479, 169);
+            this.dgvBreakoutRooms.TabIndex = 5;
+            // 
+            // Preassign_Room_Name
+            // 
+            this.Preassign_Room_Name.HeaderText = "Pre-assign Room Name";
+            this.Preassign_Room_Name.Name = "Preassign_Room_Name";
+            // 
+            // Email_Address
+            // 
+            this.Email_Address.HeaderText = "Email Address";
+            this.Email_Address.Name = "Email_Address";
+            // 
+            // Member_Name
+            // 
+            this.Member_Name.HeaderText = "Name";
+            this.Member_Name.Name = "Member_Name";
+            // 
+            // tableLayoutPanel17
+            // 
+            this.tableLayoutPanel17.ColumnCount = 3;
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98F));
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.Controls.Add(this.btnAddRoom, 0, 0);
+            this.tableLayoutPanel17.Controls.Add(this.btnDelRoom, 1, 0);
+            this.tableLayoutPanel17.Controls.Add(this.txtAddRoom, 2, 0);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(3, 277);
+            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
+            this.tableLayoutPanel17.RowCount = 1;
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(475, 28);
+            this.tableLayoutPanel17.TabIndex = 7;
+            // 
+            // btnAddRoom
+            // 
+            this.btnAddRoom.Location = new System.Drawing.Point(3, 3);
+            this.btnAddRoom.Name = "btnAddRoom";
+            this.btnAddRoom.Size = new System.Drawing.Size(75, 22);
+            this.btnAddRoom.TabIndex = 0;
+            this.btnAddRoom.Text = "Add";
+            this.btnAddRoom.UseVisualStyleBackColor = true;
+            this.btnAddRoom.Click += new System.EventHandler(this.btnAddRoom_Click);
+            // 
+            // btnDelRoom
+            // 
+            this.btnDelRoom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelRoom.Location = new System.Drawing.Point(84, 3);
+            this.btnDelRoom.Name = "btnDelRoom";
+            this.btnDelRoom.Size = new System.Drawing.Size(92, 22);
+            this.btnDelRoom.TabIndex = 1;
+            this.btnDelRoom.Text = "Delete";
+            this.btnDelRoom.UseVisualStyleBackColor = true;
+            this.btnDelRoom.Click += new System.EventHandler(this.btnDelRoom_Click);
+            // 
+            // txtAddRoom
+            // 
+            this.txtAddRoom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtAddRoom.Location = new System.Drawing.Point(182, 3);
+            this.txtAddRoom.Name = "txtAddRoom";
+            this.txtAddRoom.Size = new System.Drawing.Size(290, 23);
+            this.txtAddRoom.TabIndex = 2;
+            this.txtAddRoom.Text = "Room 1";
+            // 
+            // tableLayoutPanel18
+            // 
+            this.tableLayoutPanel18.ColumnCount = 4;
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 167F));
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
+            this.tableLayoutPanel18.Controls.Add(this.label23, 2, 0);
+            this.tableLayoutPanel18.Controls.Add(this.btnRandomizeRooms, 0, 0);
+            this.tableLayoutPanel18.Controls.Add(this.numMaxPerRoom, 3, 0);
+            this.tableLayoutPanel18.Controls.Add(this.btnDeleteRow, 1, 0);
+            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(484, 277);
+            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
+            this.tableLayoutPanel18.RowCount = 1;
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Size = new System.Drawing.Size(479, 28);
+            this.tableLayoutPanel18.TabIndex = 8;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label23.Location = new System.Drawing.Point(183, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(161, 28);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "Max Number Per Room:";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnRandomizeRooms
+            // 
+            this.btnRandomizeRooms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRandomizeRooms.Location = new System.Drawing.Point(3, 3);
+            this.btnRandomizeRooms.Name = "btnRandomizeRooms";
+            this.btnRandomizeRooms.Size = new System.Drawing.Size(99, 22);
+            this.btnRandomizeRooms.TabIndex = 6;
+            this.btnRandomizeRooms.Text = "Randomize";
+            this.btnRandomizeRooms.UseVisualStyleBackColor = true;
+            this.btnRandomizeRooms.Click += new System.EventHandler(this.btnRandomizeRooms_Click);
+            // 
+            // numMaxPerRoom
+            // 
+            this.numMaxPerRoom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numMaxPerRoom.Location = new System.Drawing.Point(350, 3);
+            this.numMaxPerRoom.Name = "numMaxPerRoom";
+            this.numMaxPerRoom.Size = new System.Drawing.Size(126, 23);
+            this.numMaxPerRoom.TabIndex = 7;
+            this.ToolTip1.SetToolTip(this.numMaxPerRoom, "This number controls how many individuals are assigned\r\nto rooms.  Due to individ" +
+        "uals having multiple Emails,\r\nthis number may not be reflected in the number of " +
+        "emails\r\nassigned to a room.");
+            this.numMaxPerRoom.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // btnDeleteRow
+            // 
+            this.btnDeleteRow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteRow.Location = new System.Drawing.Point(108, 3);
+            this.btnDeleteRow.Name = "btnDeleteRow";
+            this.btnDeleteRow.Size = new System.Drawing.Size(69, 22);
+            this.btnDeleteRow.TabIndex = 8;
+            this.btnDeleteRow.Text = "Delete";
+            this.btnDeleteRow.UseVisualStyleBackColor = true;
+            this.btnDeleteRow.Click += new System.EventHandler(this.btnDeleteRow_Click);
+            // 
             // tabSettings
             // 
             this.tabSettings.Controls.Add(this.tableLayoutPanel6);
             this.tabSettings.Location = new System.Drawing.Point(4, 24);
             this.tabSettings.Name = "tabSettings";
             this.tabSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSettings.Size = new System.Drawing.Size(792, 446);
+            this.tabSettings.Size = new System.Drawing.Size(966, 483);
             this.tabSettings.TabIndex = 4;
             this.tabSettings.Text = "Settings";
             this.tabSettings.UseVisualStyleBackColor = true;
@@ -1088,7 +1494,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 658F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 831F));
             this.tableLayoutPanel6.Controls.Add(this.label15, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.txtPL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.label16, 0, 1);
@@ -1099,6 +1505,8 @@ namespace Attendance_Counter
             this.tableLayoutPanel6.Controls.Add(this.txtKHSFormat, 1, 2);
             this.tableLayoutPanel6.Controls.Add(this.txtDefaultFolder, 1, 3);
             this.tableLayoutPanel6.Controls.Add(this.txtReportFolder, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.label20, 0, 5);
+            this.tableLayoutPanel6.Controls.Add(this.txtBreakoutFolder, 1, 5);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -1112,7 +1520,7 @@ namespace Attendance_Counter
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(786, 440);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(960, 477);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // label15
@@ -1137,7 +1545,7 @@ namespace Attendance_Counter
             this.txtPL.Location = new System.Drawing.Point(153, 4);
             this.txtPL.Name = "txtPL";
             this.txtPL.PlaceholderText = "0,User_Name,User_Email,Date/Time,Poll_Message,Poll_Count";
-            this.txtPL.Size = new System.Drawing.Size(652, 23);
+            this.txtPL.Size = new System.Drawing.Size(825, 23);
             this.txtPL.TabIndex = 1;
             this.txtPL.TextChanged += new System.EventHandler(this.txtPL_TextChanged);
             // 
@@ -1220,7 +1628,7 @@ namespace Attendance_Counter
             this.txtKHSFormat.Location = new System.Drawing.Point(153, 60);
             this.txtKHSFormat.Name = "txtKHSFormat";
             this.txtKHSFormat.PlaceholderText = resources.GetString("txtKHSFormat.PlaceholderText");
-            this.txtKHSFormat.Size = new System.Drawing.Size(652, 23);
+            this.txtKHSFormat.Size = new System.Drawing.Size(825, 23);
             this.txtKHSFormat.TabIndex = 7;
             this.txtKHSFormat.TextChanged += new System.EventHandler(this.txtKHSFormat_TextChanged);
             // 
@@ -1233,7 +1641,7 @@ namespace Attendance_Counter
             this.txtDefaultFolder.Location = new System.Drawing.Point(153, 88);
             this.txtDefaultFolder.Name = "txtDefaultFolder";
             this.txtDefaultFolder.PlaceholderText = "C:\\User\\Downloads";
-            this.txtDefaultFolder.Size = new System.Drawing.Size(652, 23);
+            this.txtDefaultFolder.Size = new System.Drawing.Size(825, 23);
             this.txtDefaultFolder.TabIndex = 8;
             this.txtDefaultFolder.TextChanged += new System.EventHandler(this.txtDefaultFolder_TextChanged);
             // 
@@ -1246,9 +1654,34 @@ namespace Attendance_Counter
             this.txtReportFolder.Location = new System.Drawing.Point(153, 116);
             this.txtReportFolder.Name = "txtReportFolder";
             this.txtReportFolder.PlaceholderText = "C:\\User\\Documents\\Attendance Reports";
-            this.txtReportFolder.Size = new System.Drawing.Size(652, 23);
+            this.txtReportFolder.Size = new System.Drawing.Size(825, 23);
             this.txtReportFolder.TabIndex = 9;
             this.txtReportFolder.TextChanged += new System.EventHandler(this.txtReportFolder_TextChanged);
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(4, 141);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(142, 27);
+            this.label20.TabIndex = 10;
+            this.label20.Text = "Breakout Folder:";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtBreakoutFolder
+            // 
+            this.txtBreakoutFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBreakoutFolder.BackColor = System.Drawing.SystemColors.Info;
+            this.txtBreakoutFolder.Location = new System.Drawing.Point(153, 144);
+            this.txtBreakoutFolder.Name = "txtBreakoutFolder";
+            this.txtBreakoutFolder.PlaceholderText = "C:\\User\\Desktop";
+            this.txtBreakoutFolder.Size = new System.Drawing.Size(825, 23);
+            this.txtBreakoutFolder.TabIndex = 11;
             // 
             // dlgOF
             // 
@@ -1269,11 +1702,19 @@ namespace Attendance_Counter
             // 
             this.dlgFB.ShowNewFolderButton = false;
             // 
+            // ToolTip1
+            // 
+            this.ToolTip1.AutoPopDelay = 20000;
+            this.ToolTip1.InitialDelay = 500;
+            this.ToolTip1.ReshowDelay = 100;
+            this.ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ToolTip1.ToolTipTitle = "Note:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 474);
+            this.ClientSize = new System.Drawing.Size(974, 511);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -1305,6 +1746,18 @@ namespace Attendance_Counter
             ((System.ComponentModel.ISupportInitialize)(this.dgViewer)).EndInit();
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
+            this.tabBreakoutRooms.ResumeLayout(false);
+            this.tableLayoutPanel14.ResumeLayout(false);
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel15.PerformLayout();
+            this.tableLayoutPanel16.ResumeLayout(false);
+            this.tableLayoutPanel16.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBreakoutRooms)).EndInit();
+            this.tableLayoutPanel17.ResumeLayout(false);
+            this.tableLayoutPanel17.PerformLayout();
+            this.tableLayoutPanel18.ResumeLayout(false);
+            this.tableLayoutPanel18.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxPerRoom)).EndInit();
             this.tabSettings.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
@@ -1397,6 +1850,37 @@ namespace Attendance_Counter
         private System.Windows.Forms.TextBox txtDefaultFolder;
         private System.Windows.Forms.TextBox txtReportFolder;
         private System.Windows.Forms.Button btnKHSImport;
+        private System.Windows.Forms.TabPage tabBreakoutRooms;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
+        private System.Windows.Forms.CheckedListBox chklstAutoAssign;
+        private System.Windows.Forms.CheckedListBox chklstExclude;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtBreakoutFolder;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button btnAutoAssignChkAll;
+        private System.Windows.Forms.Button btnAutoAssignUnchkAll;
+        private System.Windows.Forms.Button btnUpdateExclude;
+        private System.Windows.Forms.Button btnExportExclude;
+        private System.Windows.Forms.Button btnExclChkAll;
+        private System.Windows.Forms.Button btnExclUnchkAll;
+        private System.Windows.Forms.ListBox lstbxBreakoutRooms;
+        private System.Windows.Forms.DataGridView dgvBreakoutRooms;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
+        private System.Windows.Forms.Button btnAddRoom;
+        private System.Windows.Forms.Button btnDelRoom;
+        private System.Windows.Forms.TextBox txtAddRoom;
+        private System.Windows.Forms.Button btnRandomizeRooms;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel18;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.NumericUpDown numMaxPerRoom;
+        private System.Windows.Forms.Button btnDeleteRow;
+        private System.Windows.Forms.ToolTip ToolTip1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Preassign_Room_Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email_Address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Member_Name;
     }
 }
 

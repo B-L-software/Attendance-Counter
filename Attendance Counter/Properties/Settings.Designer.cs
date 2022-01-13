@@ -173,12 +173,24 @@ namespace Attendance_Counter.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting {
+        public string BreakoutFolder {
             get {
-                return ((string)(this["Setting"]));
+                return ((string)(this["BreakoutFolder"]));
             }
             set {
-                this["Setting"] = value;
+                this["BreakoutFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BreakoutRooms {
+            get {
+                return ((string)(this["BreakoutRooms"]));
+            }
+            set {
+                this["BreakoutRooms"] = value;
             }
         }
     }
